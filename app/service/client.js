@@ -4,26 +4,61 @@
  */
 
 'use strict';
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 const Service = require('egg').Service;
 class BlogService extends Service {
 
   async getAllArticleById(page, keyword) {
+    const pageSize = '10';
+    const where = {
+      status: 1,
+      [Op.or]: [
+        { title: { [Op.like]: `%${keyword || ''}%` } },
+        { content: { [Op.like]: `%${keyword || ''}%` } },
+      ],
+    };
     const { ctx } = this;
-    const reg = new RegExp(keyword, 'i');
-    const [ list, count ] = await Promise.all([
-      ctx.model.Article.find({ status: 0, $or: [{ title: { $regex: reg } }, { content: { $regex: reg } }] }, { html: 0 })
-        .populate([{ path: 'tagId', select: 'tagName' }, { path: 'categoryId', select: 'categoryName' }]).limit(10)
-        .skip((page - 1) * 10),
-      ctx.model.Article.find({ status: 0, $or: [{ title: { $regex: reg } }, { content: { $regex: reg } }] }).count(),
-    ]);
+
+    const { count, rows } = await ctx.model.Article.findAndCountAll({
+      where,
+      offset: (parseInt(page) - 1) * parseInt(pageSize),
+      limit: parseInt(pageSize),
+      order: [[ 'createdTime', 'DESC' ]], // 创建时间，倒序
+      attributes: [
+        'view', // 查看数
+        'title', // 文章标题
+        'favorite', // 点赞数
+        'id', // 文章ID
+        'comment', // 评论
+        'cover', // 封面
+        'createdTime', // 创建时间
+      ],
+      include: [
+        {
+          model: this.ctx.model.Tag,
+          as: 'tag',
+        },
+        {
+          model: this.ctx.model.Category,
+          as: 'category',
+        },
+        {
+          model: this.ctx.model.User,
+          as: 'user',
+          attributes: [ 'id', 'username', 'email', 'nickname' ],
+        },
+      ],
+    });
+
     // 截出预览部分
-    list.map(item => {
+    rows.map(item => {
       item.content = item.content.split('<!-- more -->')[0];
       return item;
     });
     return {
-      list,
+      rows,
       count,
     };
   }
