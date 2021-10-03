@@ -24,15 +24,6 @@ module.exports = app => {
       defaultValue: null,
       comment: '标签英文名称',
     },
-    user_id: {
-      type: INTEGER,
-      allowNull: false,
-      references: {
-        model: 'users',
-        key: 'id',
-      },
-      comment: '用户ID',
-    },
     category_id: {
       type: INTEGER,
       allowNull: false,
@@ -43,11 +34,11 @@ module.exports = app => {
       defaultValue: 1,
       comment: '标签状态：1->正常,2->删除',
     },
-    create_time: {
+    created_at: {
       type: DATE,
       comment: '创建时间',
     },
-    update_time: {
+    updated_at: {
       type: DATE,
       comment: '更新时间',
     },

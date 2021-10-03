@@ -87,12 +87,12 @@ module.exports = {
         type: Sequelize.ENUM('ADMIN', 'GENERAL', 'TOURIST'),
         defaultValue: 'GENERAL',
       },
-      create_time: {
+      created_at: {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
-      update_time: {
+      updated_at: {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),

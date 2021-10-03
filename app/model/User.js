@@ -94,11 +94,11 @@ module.exports = app => {
       defaultValue: 'GENERAL',
       comment: '帐号类型',
     },
-    create_time: {
+    created_at: {
       type: DATE,
       comment: '创建时间',
     },
-    update_time: {
+    updated_at: {
       type: DATE,
       comment: '更新时间',
     },

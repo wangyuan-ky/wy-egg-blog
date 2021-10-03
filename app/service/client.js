@@ -25,7 +25,7 @@ class BlogService extends Service {
       where,
       offset: (parseInt(page) - 1) * parseInt(pageSize),
       limit: parseInt(pageSize),
-      order: [[ 'create_time', 'DESC' ]], // 创建时间，倒序
+      order: [[ 'createdAt', 'DESC' ]], // 创建时间，倒序
       attributes: [
         'view', // 查看数
         'title', // 文章标题
@@ -33,7 +33,7 @@ class BlogService extends Service {
         'id', // 文章ID
         'comment', // 评论
         'cover', // 封面
-        'create_time', // 创建时间
+        'createdAt', // 创建时间
       ],
       include: [
         {

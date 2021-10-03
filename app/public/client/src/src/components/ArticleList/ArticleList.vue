@@ -2,7 +2,7 @@
   <div>
     <div v-for="article in articleList" :key="article.id" class="article-list">
       <Card class="card" :bordered="false">
-        <p class="title" @click="toDetail(article._id)" slot="title">{{article.title}}<span class="date">{{formatDate(article.create_time)}}</span></p>
+        <p class="title" @click="toDetail(article._id)" slot="title">{{article.title}}<span class="date">{{formatDate(article.created_at)}}</span></p>
         <mavonEditor class="article" codeStyle="dark" :value="article.content" :toolbarsFlag="toolbarsFlag" :subfield="toolbarsFlag" defaultOpen="preview"></mavonEditor>
         <p><span @click="toDetail(article._id)" class="read-more">阅读全文 >></span></p>
         <p>

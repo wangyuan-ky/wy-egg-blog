@@ -2,7 +2,7 @@
   <div>
      <div v-if="article._id">
         <Card class="title" :bordered="false">
-          <p>{{article.title}}<span class="date">{{formatDate(article.create_time)}}</span></p>
+          <p>{{article.title}}<span class="date">{{formatDate(article.created_at)}}</span></p>
         </Card>
         <div class="bar">
           分类：<Tag @click.native="searchByCategory(article.category_id._id)" type="border" color="primary">{{article.category_id.categoryName}}</Tag>

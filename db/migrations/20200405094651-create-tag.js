@@ -34,12 +34,12 @@ module.exports = {
         defaultValue: 1,
         comment: '1->正常,2->删除',
       },
-      create_time: {
+      created_at: {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
-      update_time: {
+      updated_at: {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),

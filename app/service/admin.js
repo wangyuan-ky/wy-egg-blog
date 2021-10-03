@@ -48,7 +48,7 @@ class BlogService extends Service {
         content: ctx.request.body.content,
         html: ctx.request.body.html,
         title: ctx.request.body.title,
-        update_time: Date(),
+        updated_at: Date(),
         status: ctx.request.body.status,
       }),
     ]);
@@ -69,7 +69,7 @@ class BlogService extends Service {
       content: ctx.request.body.content,
       html: ctx.request.body.html,
       title: ctx.request.body.title,
-      create_time: Date(),
+      created_at: Date(),
       status: ctx.request.body.status,
     });
   }
