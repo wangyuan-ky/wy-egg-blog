@@ -4,20 +4,63 @@
  */
 
 'use strict';
-
 const Service = require('egg').Service;
 const qiniu = require('qiniu');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
+
 class BlogService extends Service {
-  // 根据用户id获取文章列表
+  // 根据 用户ID 获取文章列表
   async getArticleList(id, page, keyword, status) {
+    const pageSize = '10';
+    const where = {
+      status,
+      [Op.or]: [
+        { title: { [Op.like]: `%${keyword || ''}%` } },
+        { content: { [Op.like]: `%${keyword || ''}%` } },
+      ],
+    };
     const { ctx } = this;
-    const reg = new RegExp(keyword, 'i');
-    const [ list, count ] = await Promise.all([
-      ctx.model.Article.find({ status, $or: [{ title: { $regex: reg } }, { content: { $regex: reg } }] }, { content: 0, tag_id: 0 }).limit(10).skip((page - 1) * 10),
-      ctx.model.Article.find({ $or: [{ title: { $regex: reg } }, { content: { $regex: reg } }] }).count(),
-    ]);
+
+    const { count, rows } = await ctx.model.Article.findAndCountAll({
+      where,
+      offset: (parseInt(page) - 1) * parseInt(pageSize),
+      limit: parseInt(pageSize),
+      order: [[ 'createdAt', 'DESC' ]], // 创建时间，倒序
+      attributes: [
+        'view', // 查看数
+        'title', // 文章标题
+        'favorite', // 点赞数
+        'id', // 文章ID
+        'content', // 文章markdown
+        'comment', // 评论
+        'cover', // 封面
+        'createdAt', // 创建时间
+      ],
+      include: [
+        {
+          model: this.ctx.model.Tag,
+          as: 'tag',
+        },
+        {
+          model: this.ctx.model.Category,
+          as: 'category',
+        },
+        {
+          model: this.ctx.model.User,
+          as: 'user',
+          attributes: [ 'id', 'username', 'email', 'nickname' ],
+        },
+      ],
+    });
+
+    // 截出预览部分
+    rows.map(item => {
+      item.content = item.content.split('<!-- more -->')[0];
+      return item;
+    });
     return {
-      list,
+      list: rows,
       count,
     };
   }

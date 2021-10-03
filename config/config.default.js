@@ -43,12 +43,11 @@ module.exports = appInfo => {
   config.auth = {
     enable: true,
     ignore: [
-      // admin 无需授权 路由过滤
+      /** admin 无需授权 路由过滤 */
       '/getCaptcha', // 获取图片验证码
       '/login', // 帐号密码登录
-      '/getArticleList', // 获取所有文章列表，如果有传keyword,则根据keyword搜索
 
-      // client 无需授权 路由过滤
+      /** client 无需授权 路由过滤 */
       '/c/getArticleList', // 获取所有文章列表，如果有传 keyword,则根据 keyword 搜索
       '/c/getArticleDetail',
     ],
