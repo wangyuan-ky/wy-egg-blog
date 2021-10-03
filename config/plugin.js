@@ -1,10 +1,16 @@
+/*
+ * @Author: 王媛
+ * @Last Modified by: 王媛
+ */
+
 'use strict';
 
-// had enabled by egg
-// exports.static = true;
-module.exports = {
-  mongoose: {
-    enable: true,
-    package: 'egg-mongoose',
-  },
+exports.sequelize = {
+  enable: true,
+  package: 'egg-sequelize',
+};
+
+exports.validate = {
+  enable: true,
+  package: 'egg-validate',
 };

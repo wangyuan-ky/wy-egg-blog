@@ -1,3 +1,8 @@
+/*
+ * @Author: 王媛
+ * @Last Modified by: 王媛
+ */
+
 'use strict';
 
 module.exports = app => {
@@ -8,7 +13,7 @@ module.exports = app => {
   const TagSchema = new Schema({
     tagName: { type: String },
     // count: { type: Number },
-    userId: {
+    user_id: {
       type: Schema.Types.ObjectId,
       ref: 'User',
     },

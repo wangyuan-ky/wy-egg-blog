@@ -1,3 +1,7 @@
+/*
+ * @Author: 王媛
+ * @Last Modified by: 王媛
+ */
 
 'use strict';
 const { generatePassWord } = require('../../app/lib/tool_helper');

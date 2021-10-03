@@ -1,8 +1,13 @@
 /* eslint valid-jsdoc: "off" */
 
+/*
+ * @Author: 王媛
+ * @Last Modified by: 王媛
+ */
+
 'use strict';
 
-const { USERNAME, PASSWORD, PORT, HOST, DATABASE } = require('./secret');
+const { USERNAME, PASSWORD, PORT, HOST, DATABASE, EXPIRES } = require('./secret');
 
 /**
  * @param {Egg.EggAppInfo} appInfo app info
@@ -19,7 +24,7 @@ module.exports = appInfo => {
     cert: 'huanggegehaoshuai', // jwt秘钥
   };
   config.session = {
-    maxAge: 3600 * 1000,
+    maxAge: EXPIRES,
   };
 
   config.user = { // 初始化管理员的账号
@@ -27,7 +32,7 @@ module.exports = appInfo => {
     password: 'admin',
   };
 
-  config.qiniu = { // 这里填写你七牛的Access Key和Secret Key
+  config.qiniu = { // 七牛的Access Key和Secret Key
     ak: '',
     sk: '',
   };
