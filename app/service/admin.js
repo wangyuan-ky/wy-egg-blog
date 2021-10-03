@@ -156,13 +156,26 @@ class BlogService extends Service {
 
   // 分类列表页获取分类列表，包括数量
   async getCategoryList(id, page) {
+    const pageSize = '10';
+    const where = {
+      status: 1,
+    };
     const { ctx } = this;
-    const [ list, count ] = await Promise.all([
-      ctx.model.Category.find({ user_id: id }, { __v: 0, user_id: 0 }).limit(10).skip((page - 1) * 10),
-      ctx.model.Category.find({ user_id: id }, { __v: 0, user_id: 0 }).count(),
-    ]);
+
+    const { count, rows } = await ctx.model.Category.findAndCountAll({
+      where,
+      offset: (parseInt(page) - 1) * parseInt(pageSize),
+      limit: parseInt(pageSize),
+      order: [[ 'createdAt', 'DESC' ]], // 创建时间，倒序
+      include: [
+        {
+          model: this.ctx.model.Tag,
+          as: 'tags',
+        },
+      ],
+    });
     return {
-      list,
+      list: rows,
       count,
     };
   }

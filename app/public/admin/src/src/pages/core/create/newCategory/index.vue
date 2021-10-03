@@ -24,7 +24,7 @@
       width="55">
     </el-table-column>
     <el-table-column
-      prop="categoryName"
+      prop="name"
       align="center"
       label="分类名称"
       >
@@ -32,7 +32,7 @@
         <el-input
           class="wcategory"
           :readonly="scope.row.readonly"
-          v-model="scope.row.categoryName"
+          v-model="scope.row.name"
           placeholder="请输入内容"
           ></el-input>
       </template>
@@ -116,7 +116,7 @@ export default {
     },
     Edit(index) {
       this.categoryList[index].readonly = false
-      this.initialValue = this.categoryList[index].categoryName
+      this.initialValue = this.categoryList[index].name
     },
     comfirm(index) {
       this.$confirm('是否修改该分类?', '提示', {
@@ -125,10 +125,10 @@ export default {
         type: 'warning',
         center: true
       }).then(() => {
-        let { _id, categoryName } = this.categoryList[index]
+        let { _id, name } = this.categoryList[index]
         this.categoryList[index].readonly = true
         // 调用修改分类接口
-        this.modifyCategory({ _id, categoryName })
+        this.modifyCategory({ _id, name })
       }).catch(() => {
         this.cancle(index)
       })
@@ -136,7 +136,7 @@ export default {
     // 取消修改
     cancle(index) {
       this.categoryList[index].readonly = true
-      this.categoryList[index].categoryName = this.initialValue
+      this.categoryList[index].name = this.initialValue
     },
     del(id) {
       this.$confirm('是否删除分类?', '提示', {
@@ -176,7 +176,7 @@ export default {
         return
       }
       this.$axios.post('/createCategory', {
-        categoryName: this.newCategory
+        name: this.newCategory
       })
         .then(res => {
           if (res.errcode === 0) {
