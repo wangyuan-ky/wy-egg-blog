@@ -19,7 +19,7 @@ module.exports = app => {
       defaultValue: null,
       comment: '分类名称',
     },
-    enName: {
+    en_name: {
       type: STRING(50),
       defaultValue: null,
       comment: '分类英文名称',
@@ -29,11 +29,11 @@ module.exports = app => {
       defaultValue: 1,
       comment: '分类状态：1->正常,2->删除',
     },
-    createTime: {
+    create_time: {
       type: DATE,
       comment: '创建时间',
     },
-    updateTime: {
+    update_time: {
       type: DATE,
       comment: '更新时间',
     },

@@ -14,7 +14,7 @@ module.exports = app => {
       autoIncrement: true,
       comment: '行ID',
     },
-    userId: {
+    user_id: {
       type: INTEGER,
       allowNull: false,
       references: {
@@ -23,7 +23,7 @@ module.exports = app => {
       },
       comment: '用户ID',
     },
-    articleId: {
+    article_id: {
       type: INTEGER,
       allowNull: false,
       comment: '文章ID',
@@ -38,18 +38,18 @@ module.exports = app => {
       defaultValue: 1,
       comment: '分类状态：1->正常,2->删除',
     },
-    createTime: {
+    create_time: {
       type: DATE,
       comment: '创建时间',
     },
-    updateTime: {
+    update_time: {
       type: DATE,
       comment: '更新时间',
     },
   });
   Comment.associate = () => {
     app.model.Comment.belongsTo(app.model.Article, { as: 'article' });
-    app.model.Comment.belongsTo(app.model.User, { as: 'user', foreignKey: 'userId' });
+    app.model.Comment.belongsTo(app.model.User, { as: 'user', foreignKey: 'user_id' });
   };
   return Comment;
 };

@@ -57,15 +57,15 @@ module.exports = {
         defaultValue: null,
         comment: '微博',
       },
-      totalView: {
+      total_view: {
         type: Sequelize.INTEGER,
         defaultValue: 0,
       },
-      totalLike: {
+      total_like: {
         type: Sequelize.INTEGER,
         defaultValue: 0,
       },
-      totalComment: {
+      total_comment: {
         type: Sequelize.INTEGER,
         defaultValue: 0,
       },
@@ -83,21 +83,21 @@ module.exports = {
         defaultValue: 1,
         comment: '1->正常,2->删除',
       },
-      accountType: {
+      account_type: {
         type: Sequelize.ENUM('ADMIN', 'GENERAL', 'TOURIST'),
         defaultValue: 'GENERAL',
       },
-      createdTime: {
+      create_time: {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
-      updatedTime: {
+      update_time: {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
-    }).then(() => queryInterface.addIndex('users', [ 'email', 'status', 'accountType' ]));
+    }).then(() => queryInterface.addIndex('users', [ 'email', 'status', 'account_type' ]));
   },
 
   down: (queryInterface, Sequelize) => {

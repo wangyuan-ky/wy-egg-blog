@@ -13,7 +13,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         autoIncrement: true,
       },
-      articleId: {
+      article_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -21,7 +21,7 @@ module.exports = {
           key: 'id',
         },
       },
-      favoriteId: {
+      favorite_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -35,12 +35,12 @@ module.exports = {
         defaultValue: 1,
         comment: '1->正常,2->删除',
       },
-      createdTime: {
+      create_time: {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
-      updatedTime: {
+      update_time: {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),

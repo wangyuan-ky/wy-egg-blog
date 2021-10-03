@@ -19,12 +19,12 @@ module.exports = app => {
       defaultValue: null,
       comment: '标签名称',
     },
-    enName: {
+    en_name: {
       type: STRING(50),
       defaultValue: null,
       comment: '标签英文名称',
     },
-    userId: {
+    user_id: {
       type: INTEGER,
       allowNull: false,
       references: {
@@ -33,7 +33,7 @@ module.exports = app => {
       },
       comment: '用户ID',
     },
-    categoryId: {
+    category_id: {
       type: INTEGER,
       allowNull: false,
       comment: '分类ID',
@@ -43,11 +43,11 @@ module.exports = app => {
       defaultValue: 1,
       comment: '标签状态：1->正常,2->删除',
     },
-    createTime: {
+    create_time: {
       type: DATE,
       comment: '创建时间',
     },
-    updateTime: {
+    update_time: {
       type: DATE,
       comment: '更新时间',
     },

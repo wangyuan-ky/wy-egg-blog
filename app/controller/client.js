@@ -71,13 +71,13 @@ class BlogController extends Controller {
    */
   async getArticleDetail() {
     const { ctx } = this;
-    const articleId = ctx.request.body.id;
+    const article_id = ctx.request.body.id;
     const resMsg = {
       errcode: 0,
       data: {},
       msg: 'success',
     };
-    const articleDetail = await ctx.service.client.getArticleDetailByArticleId(articleId);
+    const articleDetail = await ctx.service.client.getArticleDetailByArticleId(article_id);
     resMsg.data = articleDetail[0];
     ctx.body = resMsg;
   }

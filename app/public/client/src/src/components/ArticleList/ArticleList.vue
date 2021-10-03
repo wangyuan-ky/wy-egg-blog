@@ -2,12 +2,12 @@
   <div>
     <div v-for="article in articleList" :key="article.id" class="article-list">
       <Card class="card" :bordered="false">
-        <p class="title" @click="toDetail(article._id)" slot="title">{{article.title}}<span class="date">{{formatDate(article.createTime)}}</span></p>
+        <p class="title" @click="toDetail(article._id)" slot="title">{{article.title}}<span class="date">{{formatDate(article.create_time)}}</span></p>
         <mavonEditor class="article" codeStyle="dark" :value="article.content" :toolbarsFlag="toolbarsFlag" :subfield="toolbarsFlag" defaultOpen="preview"></mavonEditor>
         <p><span @click="toDetail(article._id)" class="read-more">阅读全文 >></span></p>
         <p>
-          分类：<Tag v-if="article.categoryId" @click.native="searchByCategory(article.categoryId._id)" type="border" color="primary">{{article.categoryId.categoryName}}</Tag>
-          标签：<Tag v-for="tag in article.tagId" @click.native="searchByTag(tag._id)" :key="tag.id" color="primary">{{tag.tagName}}</Tag>
+          分类：<Tag v-if="article.category_id" @click.native="searchByCategory(article.category_id._id)" type="border" color="primary">{{article.category_id.categoryName}}</Tag>
+          标签：<Tag v-for="tag in article.tag_id" @click.native="searchByTag(tag._id)" :key="tag.id" color="primary">{{tag.tagName}}</Tag>
         </p>
       </Card>
     </div>

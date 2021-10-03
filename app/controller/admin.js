@@ -17,7 +17,7 @@ class BlogController extends Controller {
       data: {},
       msg: 'success',
     };
-    const articleList = await ctx.service.admin.getArticleList(ctx.userId, page, keyword, status);
+    const articleList = await ctx.service.admin.getArticleList(ctx.user_id, page, keyword, status);
     resMsg.data = {
       list: articleList.list,
       count: articleList.count,
@@ -28,13 +28,13 @@ class BlogController extends Controller {
   // 获取文章的内容
   async getArticleDetail() {
     const { ctx } = this;
-    const articleId = ctx.request.body.id;
+    const article_id = ctx.request.body.id;
     const resMsg = {
       errcode: 0,
       data: {},
       msg: 'success',
     };
-    const articleDetail = await ctx.service.admin.getArticleDetailByArticleId(articleId);
+    const articleDetail = await ctx.service.admin.getArticleDetailByArticleId(article_id);
     resMsg.data = articleDetail[0];
     ctx.body = resMsg;
   }
@@ -47,8 +47,8 @@ class BlogController extends Controller {
       data: {},
       msg: 'success',
     };
-    const categoryListPromise = ctx.service.admin.getCategoryListById(ctx.userId);
-    const tagsListPromise = ctx.service.admin.getTagsListById(ctx.userId);
+    const categoryListPromise = ctx.service.admin.getCategoryListById(ctx.user_id);
+    const tagsListPromise = ctx.service.admin.getTagsListById(ctx.user_id);
     const categoryList = await categoryListPromise;
     const tagsList = await tagsListPromise;
     resMsg.data = {
@@ -171,7 +171,7 @@ class BlogController extends Controller {
   // 分类列表页获取分类列表
   async getCategoryList() {
     const { ctx } = this;
-    const id = ctx.userId;
+    const id = ctx.user_id;
     const page = ctx.query.page;
     const resMsg = {
       errcode: 0,
@@ -253,7 +253,7 @@ class BlogController extends Controller {
   // 获取标签列表
   async getTagList() {
     const { ctx } = this;
-    const id = ctx.userId;
+    const id = ctx.user_id;
     const page = ctx.query.page;
     const resMsg = {
       errcode: 0,

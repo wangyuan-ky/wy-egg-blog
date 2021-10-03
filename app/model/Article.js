@@ -19,17 +19,17 @@ module.exports = app => {
       defaultValue: null,
       comment: '文章标题',
     },
-    categoryId: {
+    category_id: {
       type: INTEGER,
       allowNull: false,
       comment: '分类ID',
     },
-    tagId: {
+    tag_id: {
       type: INTEGER,
       allowNull: false,
       comment: '标签ID',
     },
-    userId: {
+    user_id: {
       type: INTEGER,
       allowNull: false,
       comment: '用户ID',
@@ -64,7 +64,7 @@ module.exports = app => {
       defaultValue: null,
       comment: '作者',
     },
-    articleCount: {
+    article_count: {
       type: INTEGER,
       defaultValue: 0,
       comment: '字数',
@@ -89,11 +89,11 @@ module.exports = app => {
       defaultValue: 1,
       comment: '文章状态：1->已发表,2->草稿,3->已删除',
     },
-    createTime: {
+    create_time: {
       type: DATE,
       comment: '创建时间',
     },
-    updateTime: {
+    update_time: {
       type: DATE,
       comment: '更新时间',
     },
@@ -103,7 +103,7 @@ module.exports = app => {
     app.model.Article.hasMany(app.model.Comment, { as: 'comments' });
     app.model.Article.hasMany(app.model.Favorite);
     app.model.Article.belongsTo(app.model.Tag, { as: 'tag' });
-    app.model.Article.belongsTo(app.model.User, { as: 'user', foreignKey: 'userId' });
+    app.model.Article.belongsTo(app.model.User, { as: 'user', foreignKey: 'user_id' });
   };
 
   return Article;

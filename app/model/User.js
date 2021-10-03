@@ -59,17 +59,17 @@ module.exports = app => {
       defaultValue: null,
       comment: '微博',
     },
-    totalView: {
+    total_view: {
       type: INTEGER,
       defaultValue: 0,
       comment: '总访问量',
     },
-    totalLike: {
+    total_like: {
       type: INTEGER,
       defaultValue: 0,
       comment: '总喜欢数',
     },
-    totalComment: {
+    total_comment: {
       type: INTEGER,
       defaultValue: 0,
       comment: '总评论数',
@@ -89,23 +89,23 @@ module.exports = app => {
       defaultValue: 1,
       comment: '用户状态：1->正常,2->删除',
     },
-    accountType: {
+    account_type: {
       type: ENUM('ADMIN', 'GENERAL', 'TOURIST'),
       defaultValue: 'GENERAL',
       comment: '帐号类型',
     },
-    createTime: {
+    create_time: {
       type: DATE,
       comment: '创建时间',
     },
-    updateTime: {
+    update_time: {
       type: DATE,
       comment: '更新时间',
     },
   });
   User.associate = () => {
-    app.model.User.hasMany(app.model.Article, { foreignKey: 'userId' });
-    app.model.User.hasMany(app.model.Comment, { foreignKey: 'userId' });
+    app.model.User.hasMany(app.model.Article, { foreignKey: 'user_id' });
+    app.model.User.hasMany(app.model.Comment, { foreignKey: 'user_id' });
   };
   return User;
 };

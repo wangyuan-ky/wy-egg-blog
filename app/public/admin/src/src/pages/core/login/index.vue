@@ -101,7 +101,7 @@ export default {
                 this.$axios.defaults.headers.Authorization = localStorage['token']
                 // 设置 cookie 一定要存 uuid整个系统依赖这个数据进行校验和存储
                 // 且必须先设置uuid的cookie再进行vuex的存储，因为vuex存储依赖cookie的uuid
-                Cookies.set('uuid', res.data.uid, {
+                Cookies.set('uuid', res.data.user_id, {
                   expires: 1
                 })
                 // 设置用户名

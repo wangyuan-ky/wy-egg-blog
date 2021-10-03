@@ -13,12 +13,12 @@ module.exports = app => {
       autoIncrement: true,
       comment: '行ID',
     },
-    articleId: {
+    article_id: {
       type: INTEGER,
       allowNull: false,
       comment: '文章ID',
     },
-    favoriteId: {
+    favorite_id: {
       type: INTEGER,
       allowNull: false,
       comment: '点赞ID',
@@ -28,11 +28,11 @@ module.exports = app => {
       defaultValue: 1,
       comment: '点赞状态：1->正常,2->删除',
     },
-    createTime: {
+    create_time: {
       type: DATE,
       comment: '创建时间',
     },
-    updateTime: {
+    update_time: {
       type: DATE,
       comment: '更新时间',
     },

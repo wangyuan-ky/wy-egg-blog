@@ -45,7 +45,7 @@ class LoginController extends Controller {
     resMsg.token = userData.token;
     resMsg.data = {
       username: userData.user.userName,
-      uid: userData.user._id,
+      user_id: userData.user._id,
     };
     ctx.body = resMsg;
   }

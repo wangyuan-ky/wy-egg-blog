@@ -10,7 +10,7 @@ module.exports = () => {
   return async function auth(ctx, next) {
     try {
       const decode = jwt.verify(ctx.get('Authorization'), ctx.app.config.jwt.cert);
-      ctx.userId = decode.id;
+      ctx.user_id = decode.id;
     } catch (err) {
       console.log(err);
       ctx.status = 401;

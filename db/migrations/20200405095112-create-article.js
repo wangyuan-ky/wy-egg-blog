@@ -18,7 +18,7 @@ module.exports = {
         defaultValue: null,
         comment: '文章标题',
       },
-      categoryId: {
+      category_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -26,7 +26,7 @@ module.exports = {
           key: 'id',
         },
       },
-      tagId: {
+      tag_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -34,7 +34,7 @@ module.exports = {
           key: 'id',
         },
       },
-      userId: {
+      user_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -66,7 +66,7 @@ module.exports = {
         defaultValue: null,
         comment: 'anchor',
       },
-      articleCount: {
+      article_count: {
         type: Sequelize.INTEGER,
         defaultValue: 0,
         comment: '字数',
@@ -91,12 +91,12 @@ module.exports = {
         defaultValue: 1,
         comment: '1->正常,2->删除',
       },
-      createdTime: {
+      create_time: {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
-      updatedTime: {
+      update_time: {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),

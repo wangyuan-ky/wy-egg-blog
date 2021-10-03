@@ -13,7 +13,7 @@ class BlogService extends Service {
     const { ctx } = this;
     const reg = new RegExp(keyword, 'i');
     const [ list, count ] = await Promise.all([
-      ctx.model.Article.find({ status, $or: [{ title: { $regex: reg } }, { content: { $regex: reg } }] }, { content: 0, tagId: 0 }).limit(10).skip((page - 1) * 10),
+      ctx.model.Article.find({ status, $or: [{ title: { $regex: reg } }, { content: { $regex: reg } }] }, { content: 0, tag_id: 0 }).limit(10).skip((page - 1) * 10),
       ctx.model.Article.find({ $or: [{ title: { $regex: reg } }, { content: { $regex: reg } }] }).count(),
     ]);
     return {
@@ -24,17 +24,17 @@ class BlogService extends Service {
   // 根据文章id获取文章详情
   async getArticleDetailByArticleId(id) {
     const { ctx } = this;
-    return await ctx.model.Article.find({ _id: id }).populate([ 'tagId', 'categoryId' ]);
+    return await ctx.model.Article.find({ _id: id }).populate([ 'tag_id', 'category_id' ]);
   }
   // 根据用户id获取分类列表，只返回所有分类，用于文章编辑页
   async getCategoryListById(id) {
     const { ctx } = this;
-    return await ctx.model.Category.find({ userId: id }, { __v: 0, userId: 0 });
+    return await ctx.model.Category.find({ user_id: id }, { __v: 0, user_id: 0 });
   }
   // 根据用户id获取标签列表，只返回所有标签，用于文章编辑页
   async getTagsListById(id) {
     const { ctx } = this;
-    return await ctx.model.Tag.find({ userId: id }, { __v: 0, userId: 0 });
+    return await ctx.model.Tag.find({ user_id: id }, { __v: 0, user_id: 0 });
   }
   // 更新文章
   async updateArticle(id) {
@@ -42,13 +42,13 @@ class BlogService extends Service {
     const [ oldArticle, res ] = await Promise.all([
       ctx.model.Article.findOne({ _id: id }).select('status'),
       ctx.model.Article.update({ _id: id }, {
-        userId: ctx.userId,
-        tagId: ctx.request.body.tag,
-        categoryId: ctx.request.body.category || null,
+        user_id: ctx.user_id,
+        tag_id: ctx.request.body.tag,
+        category_id: ctx.request.body.category || null,
         content: ctx.request.body.content,
         html: ctx.request.body.html,
         title: ctx.request.body.title,
-        updateTime: Date(),
+        update_time: Date(),
         status: ctx.request.body.status,
       }),
     ]);
@@ -63,13 +63,13 @@ class BlogService extends Service {
   async createArticle() {
     const { ctx } = this;
     return await ctx.model.Article.create({
-      userId: ctx.userId,
-      tagId: ctx.request.body.tag,
-      categoryId: ctx.request.body.category || null,
+      user_id: ctx.user_id,
+      tag_id: ctx.request.body.tag,
+      category_id: ctx.request.body.category || null,
       content: ctx.request.body.content,
       html: ctx.request.body.html,
       title: ctx.request.body.title,
-      createTime: Date(),
+      create_time: Date(),
       status: ctx.request.body.status,
     });
   }
@@ -105,8 +105,8 @@ class BlogService extends Service {
   async getCategoryList(id, page) {
     const { ctx } = this;
     const [ list, count ] = await Promise.all([
-      ctx.model.Category.find({ userId: id }, { __v: 0, userId: 0 }).limit(10).skip((page - 1) * 10),
-      ctx.model.Category.find({ userId: id }, { __v: 0, userId: 0 }).count(),
+      ctx.model.Category.find({ user_id: id }, { __v: 0, user_id: 0 }).limit(10).skip((page - 1) * 10),
+      ctx.model.Category.find({ user_id: id }, { __v: 0, user_id: 0 }).count(),
     ]);
     return {
       list,
@@ -137,14 +137,14 @@ class BlogService extends Service {
   // 创建分类
   async createCategory(categoryName) {
     const { ctx } = this;
-    return await ctx.model.Category.create({ categoryName, userId: ctx.userId });
+    return await ctx.model.Category.create({ categoryName, user_id: ctx.user_id });
   }
   // 标签列表页获取标签列表，包括数量
   async getTagList(id, page) {
     const { ctx } = this;
     const [ list, count ] = await Promise.all([
-      ctx.model.Tag.find({ userId: id }, { __v: 0, userId: 0 }).limit(10).skip((page - 1) * 10),
-      ctx.model.Tag.find({ userId: id }, { __v: 0, userId: 0 }).count(),
+      ctx.model.Tag.find({ user_id: id }, { __v: 0, user_id: 0 }).limit(10).skip((page - 1) * 10),
+      ctx.model.Tag.find({ user_id: id }, { __v: 0, user_id: 0 }).count(),
     ]);
     return {
       list,
@@ -175,7 +175,7 @@ class BlogService extends Service {
   // 创建标签
   async createTag(tagName) {
     const { ctx } = this;
-    return await ctx.model.Tag.create({ tagName, userId: ctx.userId });
+    return await ctx.model.Tag.create({ tagName, user_id: ctx.user_id });
   }
   // 生成七牛token
   async getQiniuToken() {

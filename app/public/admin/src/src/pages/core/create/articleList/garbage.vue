@@ -13,7 +13,7 @@
     ref="multipleTable"
     :data="articleList"
     tooltip-effect="dark"
-    :default-sort = "{prop: 'date', createTime: 'descending'}"
+    :default-sort = "{prop: 'date', create_time: 'descending'}"
     @selection-change="handleSelectionChange"
     style="width: 100%"
     >
@@ -23,7 +23,7 @@
       width="55">
     </el-table-column>
     <el-table-column
-      prop="createTime"
+      prop="create_time"
       sortable
       label="日期"
       :formatter="timeFormatter"

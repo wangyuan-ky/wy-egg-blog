@@ -107,14 +107,14 @@ export default {
       })
     },
     _initData() {
-      if (!this.detail.tagId) {
+      if (!this.detail.tag_id) {
         this.tag = []
       } else {
-        this.article.tag = this.detail.tagId.map(item => {
+        this.article.tag = this.detail.tag_id.map(item => {
           return item._id
         })
       }
-      this.article.category = this.detail.categoryId ? this.detail.categoryId._id : ''
+      this.article.category = this.detail.category_id ? this.detail.category_id._id : ''
       this.article.content = this.detail.content || ''
       this.article.title = this.detail.title || ''
       this.article.id = this.detail._id || ''
