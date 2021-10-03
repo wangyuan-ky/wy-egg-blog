@@ -2,9 +2,9 @@
   <div>
     <div v-for="article in articleList" :key="article.id" class="article-list">
       <Card class="card" :bordered="false">
-        <p class="title" @click="toDetail(article._id)" slot="title">{{article.title}}<span class="date">{{formatDate(article.created_at)}}</span></p>
+        <p class="title" @click="toDetail(article)" slot="title">{{article.title}}<span class="date">{{formatDate(article.created_at)}}</span></p>
         <mavonEditor class="article" codeStyle="dark" :value="article.content" :toolbarsFlag="toolbarsFlag" :subfield="toolbarsFlag" defaultOpen="preview"></mavonEditor>
-        <p><span @click="toDetail(article._id)" class="read-more">阅读全文 >></span></p>
+        <p><span @click="toDetail(article)" class="read-more">阅读全文 >></span></p>
         <p>
           分类：<Tag v-if="article.category_id" @click.native="searchByCategory(article.category_id._id)" type="border" color="primary">{{article.category_id.categoryName}}</Tag>
           标签：<Tag v-for="tag in article.tag_id" @click.native="searchByTag(tag._id)" :key="tag.id" color="primary">{{tag.tagName}}</Tag>
@@ -69,8 +69,8 @@ export default {
     formatDate(date) {
       return moment(new Date(date)).format('YYYY-MM-DD HH:mm:ss')
     },
-    toDetail(id) {
-      this.$router.push(`/AticleDetail/${id}`)
+    toDetail(articleInfo) {
+      this.$router.push(`/AticleDetail/${articleInfo.id}`)
     },
     searchByCategory(id) {
       // 去搜索结果页

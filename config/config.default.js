@@ -44,6 +44,7 @@ module.exports = appInfo => {
     enable: true,
     ignore: [
       '/c/getArticleList',
+      '/c/getArticleDetail',
     ],
   };
 

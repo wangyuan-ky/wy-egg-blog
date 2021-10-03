@@ -31,6 +31,7 @@ class BlogService extends Service {
         'title', // 文章标题
         'favorite', // 点赞数
         'id', // 文章ID
+        'content', // 文章markdown
         'comment', // 评论
         'cover', // 封面
         'createdAt', // 创建时间
@@ -58,7 +59,7 @@ class BlogService extends Service {
       return item;
     });
     return {
-      rows,
+      list: rows,
       count,
     };
   }
@@ -102,7 +103,13 @@ class BlogService extends Service {
 
   async getArticleDetailByArticleId(id) {
     const { ctx } = this;
-    return await ctx.model.Article.find({ _id: id }, { html: 0 }).populate([{ path: 'tag_id', select: 'tagName' }, { path: 'category_id', select: 'categoryName' }]);
+    console.log('\n\n\n\n\n106');
+    return await ctx.model.Article.find(
+      { _id: id },
+      { html: 0 }
+    ).populate(
+      [{ path: 'tag_id', select: 'tagName' }, { path: 'category_id', select: 'categoryName' }]
+    );
   }
 
   // 获取分类及数量
