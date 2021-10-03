@@ -48,7 +48,7 @@ export default {
   computed: {
     tags() {
       return this.repoTags.map(item => {
-        return [item.tagName, item.count, item.tag_id]
+        return [item.name, item.count, item.tag_id]
       })
     }
   },

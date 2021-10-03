@@ -24,7 +24,7 @@
       width="55">
     </el-table-column>
     <el-table-column
-      prop="tagName"
+      prop="name"
       align="center"
       label="标签名称"
       >
@@ -32,7 +32,7 @@
         <el-input
           class="wcategory"
           :readonly="scope.row.readonly"
-          v-model="scope.row.tagName"
+          v-model="scope.row.name"
           placeholder="请输入标签"
           ></el-input>
       </template>
@@ -116,7 +116,7 @@ export default {
     },
     Edit(index) {
       this.tagList[index].readonly = false
-      this.initialValue = this.tagList[index].tagName
+      this.initialValue = this.tagList[index].name
     },
     comfirm(index) {
       this.$confirm('是否修改该标签?', '提示', {
@@ -125,10 +125,10 @@ export default {
         type: 'warning',
         center: true
       }).then(() => {
-        let { id, tagName } = this.tagList[index]
+        let { id, name } = this.tagList[index]
         this.tagList[index].readonly = true
         // 调用修改标签接口
-        this.modifyTag({ id, tagName })
+        this.modifyTag({ id, name })
       }).catch(() => {
         this.cancle(index)
       })
@@ -136,7 +136,7 @@ export default {
     // 取消修改
     cancle(index) {
       this.tagList[index].readonly = true
-      this.tagList[index].tagName = this.initialValue
+      this.tagList[index].name = this.initialValue
     },
     del(id) {
       this.$confirm('是否删除标签?', '提示', {
@@ -176,7 +176,7 @@ export default {
         return
       }
       this.$axios.post('/createTag', {
-        tagName: this.newTag
+        name: this.newTag
       })
         .then(res => {
           if (res.errcode === 0) {

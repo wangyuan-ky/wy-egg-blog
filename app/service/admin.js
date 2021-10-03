@@ -242,22 +242,33 @@ class BlogService extends Service {
   }
 
   // 标签列表页获取标签列表，包括数量
-  async getTagList(id, page) {
+  async getTagList(page) {
+    const pageSize = '10';
+    const where = {
+      status: 1,
+    };
     const { ctx } = this;
-    const [ list, count ] = await Promise.all([
-      ctx.model.Tag.find({ user_id: id }, { __v: 0, user_id: 0 }).limit(10).skip((page - 1) * 10),
-      ctx.model.Tag.find({ user_id: id }, { __v: 0, user_id: 0 }).count(),
-    ]);
+
+    const { count, rows } = await ctx.model.Tag.findAndCountAll({
+      where,
+      offset: (parseInt(page) - 1) * parseInt(pageSize),
+      limit: parseInt(pageSize),
+      order: [[ 'createdAt', 'DESC' ]], // 创建时间，倒序
+      include: [{
+        model: ctx.model.Category,
+        as: 'category',
+      }],
+    });
     return {
-      list,
+      list: rows,
       count,
     };
   }
 
   // 修改标签
-  async modifyTag({ id, tagName }) {
+  async modifyTag({ id, name }) {
     const { ctx } = this;
-    return await ctx.model.Tag.update({ id }, { tagName });
+    return await ctx.model.Tag.update({ id }, { name });
   }
 
   // 删除标签
@@ -273,16 +284,16 @@ class BlogService extends Service {
   }
 
   // 检查重复标签
-  async checkDuplicateTag(tagName) {
+  async checkDuplicateTag(name) {
     const { ctx } = this;
-    const res = await ctx.model.Tag.find({ tagName });
+    const res = await ctx.model.Tag.find({ name });
     return res.length === 0;
   }
 
   // 创建标签
-  async createTag(tagName) {
+  async createTag(name) {
     const { ctx } = this;
-    return await ctx.model.Tag.create({ tagName, user_id: ctx.user_id });
+    return await ctx.model.Tag.create({ name, user_id: ctx.user_id });
   }
 
   // 生成七牛token

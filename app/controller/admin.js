@@ -253,14 +253,13 @@ class BlogController extends Controller {
   // 获取标签列表
   async getTagList() {
     const { ctx } = this;
-    const id = ctx.user_id;
     const page = ctx.query.page;
     const resMsg = {
       errcode: 0,
       data: {},
       msg: 'success',
     };
-    const res = await ctx.service.admin.getTagList(id, page);
+    const res = await ctx.service.admin.getTagList(page);
     resMsg.data = res;
     ctx.body = resMsg;
   }
@@ -312,19 +311,19 @@ class BlogController extends Controller {
   // 创建标签
   async createTag() {
     const { ctx } = this;
-    const { tagName } = ctx.request.body;
+    const { name } = ctx.request.body;
     let res;
     const resMsg = {
       errcode: 0,
       data: {},
       msg: '标签新增成功',
     };
-    const isNew = await ctx.service.admin.checkDuplicateTag(tagName);
+    const isNew = await ctx.service.admin.checkDuplicateTag(name);
     if (!isNew) {
       resMsg.msg = '该标签已存在';
       resMsg.errcode = 1;
     } else {
-      res = await ctx.service.admin.createTag(tagName);
+      res = await ctx.service.admin.createTag(name);
       if (!res.id) {
         resMsg.msg = '标签新增失败';
       }

@@ -33,7 +33,7 @@
         <el-option
           v-for="item in tags"
           :key="item.value"
-          :label="item.tagName"
+          :label="item.name"
           :value="item.id">
         </el-option>
       </el-select>
