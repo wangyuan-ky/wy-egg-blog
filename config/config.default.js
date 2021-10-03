@@ -19,7 +19,7 @@ module.exports = appInfo => {
    **/
   const config = (exports = {});
 
-  config.keys = appInfo.name + '_153332185447_3632';
+  config.keys = appInfo.name + '_1586057841215_9419';
   config.jwt = {
     cert: 'huanggegehaoshuai', // jwt秘钥
   };
@@ -33,8 +33,8 @@ module.exports = appInfo => {
   };
 
   config.qiniu = { // 七牛的Access Key和Secret Key
-    ak: '',
-    sk: '',
+    ak: 'pZN1Fwwn7Qij9ICkZWdD7GAlzbr25hO6pNxUlsUg',
+    sk: '_ryoxhPTzEqvJSbL9o7DexlkkzLH0hwIis7FXg4i',
   };
 
   // add your middleware config here
@@ -43,15 +43,7 @@ module.exports = appInfo => {
   config.auth = {
     enable: true,
     ignore: [
-      '/api/categories',
-      '/api/login',
-      '/api/register',
-      '/api/articles',
-      '/api/hot',
-      '/api/detail',
-      '/api/comments',
-      '/api/tags',
-      '/api/toursit/comment',
+      '/c/getArticleList',
     ],
   };
 

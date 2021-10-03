@@ -9,6 +9,7 @@ const Service = require('egg').Service;
 const jwt = require('jsonwebtoken');
 const svgCaptcha = require('svg-captcha');
 class LoginService extends Service {
+
   // 生成验证码
   genCaptcha() {
     return svgCaptcha.create({
@@ -16,6 +17,7 @@ class LoginService extends Service {
       height: 38,
     });
   }
+
   // 检查验证码是否正确
   checkCaptcha(code) {
     const { ctx } = this;
@@ -28,6 +30,7 @@ class LoginService extends Service {
     }
     return code === sessCode;
   }
+
   // 登录操作
   async login({ username, password }) {
     const { ctx, app } = this;

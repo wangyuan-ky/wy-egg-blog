@@ -13,7 +13,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         autoIncrement: true,
       },
-      uid: {
+      userId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -21,7 +21,7 @@ module.exports = {
           key: 'id',
         },
       },
-      article_id: {
+      articleId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -39,12 +39,12 @@ module.exports = {
         defaultValue: 1,
         comment: '1->正常,2->删除',
       },
-      created_at: {
+      createdTime: {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
-      updated_at: {
+      updatedTime: {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),

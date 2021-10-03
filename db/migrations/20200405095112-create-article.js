@@ -18,17 +18,29 @@ module.exports = {
         defaultValue: null,
         comment: '文章标题',
       },
-      uid: {
+      categoryId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'categories',
+          key: 'id',
+        },
+      },
+      tagId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'tags',
+          key: 'id',
+        },
+      },
+      userId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'users',
           key: 'id',
         },
-      },
-      abstract: {
-        type: Sequelize.STRING(500),
-        defaultValue: null,
       },
       content: {
         type: Sequelize.TEXT,
@@ -40,6 +52,10 @@ module.exports = {
         defaultValue: null,
         comment: 'html内容',
       },
+      abstract: {
+        type: Sequelize.STRING(500),
+        defaultValue: null,
+      },
       markdown: {
         type: Sequelize.TEXT,
         defaultValue: null,
@@ -50,7 +66,7 @@ module.exports = {
         defaultValue: null,
         comment: 'anchor',
       },
-      article_count: {
+      articleCount: {
         type: Sequelize.INTEGER,
         defaultValue: 0,
         comment: '字数',
@@ -75,28 +91,12 @@ module.exports = {
         defaultValue: 1,
         comment: '1->正常,2->删除',
       },
-      category_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'categories',
-          key: 'id',
-        },
-      },
-      tag_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'tags',
-          key: 'id',
-        },
-      },
-      created_at: {
+      createdTime: {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
-      updated_at: {
+      updatedTime: {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),

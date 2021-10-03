@@ -6,7 +6,7 @@
 'use strict';
 
 module.exports = app => {
-  const { STRING, INTEGER } = app.Sequelize;
+  const { STRING, INTEGER, DATE } = app.Sequelize;
   const Category = app.model.define('categories', {
     id: {
       primaryKey: true,
@@ -19,7 +19,7 @@ module.exports = app => {
       defaultValue: null,
       comment: '分类名称',
     },
-    en_name: {
+    enName: {
       type: STRING(50),
       defaultValue: null,
       comment: '分类英文名称',
@@ -28,6 +28,14 @@ module.exports = app => {
       type: INTEGER,
       defaultValue: 1,
       comment: '分类状态：1->正常,2->删除',
+    },
+    createTime: {
+      type: DATE,
+      comment: '创建时间',
+    },
+    updateTime: {
+      type: DATE,
+      comment: '更新时间',
     },
   });
   Category.associate = () => {

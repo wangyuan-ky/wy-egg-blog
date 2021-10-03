@@ -10,19 +10,19 @@ module.exports = {
     return queryInterface.bulkInsert('categories', [
       {
         name: '文学',
-        en_name: 'literature',
+        enName: 'literature',
       },
       {
         name: '艺术',
-        en_name: 'art',
+        enName: 'art',
       },
       {
         name: '后端',
-        en_name: 'backend',
+        enName: 'backend',
       },
       {
         name: '前端',
-        en_name: 'frontend',
+        enName: 'frontend',
       },
     ], {});
   },

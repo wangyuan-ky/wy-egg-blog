@@ -7,6 +7,7 @@
 
 const Controller = require('egg').Controller;
 class LoginController extends Controller {
+
   // 获取验证码
   async getCaptcha() {
     const { ctx } = this;
@@ -16,6 +17,7 @@ class LoginController extends Controller {
     // 将生成的验证码svg图片返回给前端
     ctx.body = captcha.data;
   }
+
   // 登录
   async login() {
     const { ctx } = this;

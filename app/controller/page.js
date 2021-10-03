@@ -11,6 +11,7 @@ const util = require('util');
 const path = require('path');
 const readFilePromise = util.promisify(fs.readFile);
 class PageController extends Controller {
+
   /**
    * 打包后可以通过
    * http://rootUrl/  和 http://rootUrl/admin 来访问前台可后台
@@ -19,14 +20,13 @@ class PageController extends Controller {
   async index() {
     const { ctx } = this;
     ctx.response.type = 'html';
-    const page = await readFilePromise(path.resolve(__dirname, '../public/client/dist/index.html'));
-    ctx.body = page;
+    ctx.body = await readFilePromise(path.resolve(__dirname, '../public/client/dist/index.html'));
   }
+
   async admin() {
     const { ctx } = this;
     ctx.response.type = 'html';
-    const page = await readFilePromise(path.resolve(__dirname, '../public/admin/dist/index.html'));
-    ctx.body = page;
+    ctx.body = await readFilePromise(path.resolve(__dirname, '../public/admin/dist/index.html'));
   }
 }
 

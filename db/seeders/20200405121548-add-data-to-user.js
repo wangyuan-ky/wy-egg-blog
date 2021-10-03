@@ -4,39 +4,39 @@
  */
 
 'use strict';
-const { generatePassWord } = require('../../app/lib/tool_helper');
+const { generatePassWord } = require('../../app/extend/helper');
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('users', [
       {
-        username: 'qiye',
-        password: generatePassWord('qiye@admin.com'),
-        email: 'qiye@admin.com',
+        username: 'wangyuan',
+        password: generatePassWord('wangyuan-ky'),
+        email: '342007229@qq.com',
         nickname: '王媛',
         avatar: 'https://immisso.oss-cn-hangzhou.aliyuncs.com/avatar/001.png',
         profession: '全栈工程师',
-        website: 'https://www.immisso.com',
-        github: 'https://github.com/immisso',
-        gitee: 'https://gitee.com/misso',
-        account_type: 'ADMIN',
-        total_view: 90,
-        total_like: 0,
-        total_comment: 0,
+        website: 'https://github.com/wangyuan-ky',
+        github: 'https://github.com/wangyuan-ky/immisso',
+        gitee: 'https://github.com/wangyuan-ky',
+        accountType: 'ADMIN',
+        totalView: 90,
+        totalLike: 0,
+        totalComment: 0,
       },
       {
-        username: 'laozi',
-        password: generatePassWord('laozi@xx.com'),
-        email: 'laozi@xx.com',
-        nickname: '老子',
+        username: 'someone',
+        password: generatePassWord('someone'),
+        email: 'someone@163.com',
+        nickname: '大神',
         avatar: 'https://immisso.oss-cn-hangzhou.aliyuncs.com/avatar/002.png',
-        profession: '[春秋]哲学家',
-        website: 'http://www.immisso.com',
-        github: 'https://github.com/immisso/blog-server',
-        gitee: 'https://gitee.com/misso',
-        total_view: 5001,
-        total_like: 0,
-        total_comment: 0,
+        profession: '前端开发工程师',
+        website: 'https://github.com/wangyuan-ky',
+        github: 'https://github.com/wangyuan-ky',
+        gitee: 'https://github.com/wangyuan-ky',
+        totalView: 5001,
+        totalLike: 0,
+        totalComment: 0,
       },
     ], {});
   },

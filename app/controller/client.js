@@ -27,6 +27,7 @@ class BlogController extends Controller {
     };
     ctx.body = resMsg;
   }
+
   /**
    * 根据分类id查询文章
    */
@@ -45,6 +46,7 @@ class BlogController extends Controller {
     };
     ctx.body = resMsg;
   }
+
   /**
    * 根据标签id查询文章
    */
@@ -63,6 +65,7 @@ class BlogController extends Controller {
     };
     ctx.body = resMsg;
   }
+
   /**
    * 根据文章id查询文章内容
    */
@@ -78,6 +81,7 @@ class BlogController extends Controller {
     resMsg.data = articleDetail[0];
     ctx.body = resMsg;
   }
+
   /**
    * 获取所有分类和标签及其数量
    */

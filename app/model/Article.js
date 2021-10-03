@@ -6,7 +6,7 @@
 'use strict';
 
 module.exports = app => {
-  const { STRING, INTEGER, TEXT } = app.Sequelize;
+  const { STRING, INTEGER, TEXT, DATE } = app.Sequelize;
   const Article = app.model.define('articles', {
     id: {
       primaryKey: true,
@@ -19,17 +19,17 @@ module.exports = app => {
       defaultValue: null,
       comment: '文章标题',
     },
-    category_id: {
+    categoryId: {
       type: INTEGER,
       allowNull: false,
       comment: '分类ID',
     },
-    tag_id: {
+    tagId: {
       type: INTEGER,
       allowNull: false,
       comment: '标签ID',
     },
-    user_id: {
+    userId: {
       type: INTEGER,
       allowNull: false,
       comment: '用户ID',
@@ -64,7 +64,7 @@ module.exports = app => {
       defaultValue: null,
       comment: '作者',
     },
-    article_count: {
+    articleCount: {
       type: INTEGER,
       defaultValue: 0,
       comment: '字数',
@@ -87,13 +87,15 @@ module.exports = app => {
     status: {
       type: INTEGER,
       defaultValue: 1,
-      comment: '1->已发表,2->草稿,3->已删除',
+      comment: '文章状态：1->已发表,2->草稿,3->已删除',
     },
-    create_time: {
-      type: String,
+    createTime: {
+      type: DATE,
+      comment: '创建时间',
     },
-    update_time: {
-      type: String,
+    updateTime: {
+      type: DATE,
+      comment: '更新时间',
     },
   });
   Article.associate = () => {
@@ -101,7 +103,7 @@ module.exports = app => {
     app.model.Article.hasMany(app.model.Comment, { as: 'comments' });
     app.model.Article.hasMany(app.model.Favorite);
     app.model.Article.belongsTo(app.model.Tag, { as: 'tag' });
-    app.model.Article.belongsTo(app.model.User, { as: 'user', foreignKey: 'user_id' });
+    app.model.Article.belongsTo(app.model.User, { as: 'user', foreignKey: 'userId' });
   };
 
   return Article;

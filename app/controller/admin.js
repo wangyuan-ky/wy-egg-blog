@@ -7,6 +7,7 @@
 
 const Controller = require('egg').Controller;
 class BlogController extends Controller {
+
   // 获取所有文章列表
   async getArticleList() {
     const { ctx } = this;
@@ -23,6 +24,7 @@ class BlogController extends Controller {
     };
     ctx.body = resMsg;
   }
+
   // 获取文章的内容
   async getArticleDetail() {
     const { ctx } = this;
@@ -36,6 +38,7 @@ class BlogController extends Controller {
     resMsg.data = articleDetail[0];
     ctx.body = resMsg;
   }
+
   // 编辑文章页获取用户的标签和分类数据
   async getArticleOptions() {
     const { ctx } = this;
@@ -54,6 +57,7 @@ class BlogController extends Controller {
     };
     ctx.body = resMsg;
   }
+
   // 创建或更新文章，如果有文章id就更新文章，否则新建文章
   async postArticle() {
     const { ctx } = this;
@@ -87,6 +91,7 @@ class BlogController extends Controller {
     }
     ctx.body = resMsg;
   }
+
   // 删除文章
   async delArticle() {
     const { ctx } = this;
@@ -105,6 +110,7 @@ class BlogController extends Controller {
     }
     ctx.body = resMsg;
   }
+
   // 批量删除文章
   async delArticleBatch() {
     const { ctx } = this;
@@ -123,6 +129,7 @@ class BlogController extends Controller {
     }
     ctx.body = resMsg;
   }
+
   // 恢复文章
   async recoveryArticle() {
     const { ctx } = this;
@@ -141,6 +148,7 @@ class BlogController extends Controller {
     }
     ctx.body = resMsg;
   }
+
   // 批量恢复文章
   async recoveryArticleBatch() {
     const { ctx } = this;
@@ -159,6 +167,7 @@ class BlogController extends Controller {
     }
     ctx.body = resMsg;
   }
+
   // 分类列表页获取分类列表
   async getCategoryList() {
     const { ctx } = this;
@@ -173,6 +182,7 @@ class BlogController extends Controller {
     resMsg.data = res;
     ctx.body = resMsg;
   }
+
   // 修改分类信息
   async modifyCategory() {
     const { ctx } = this;
@@ -189,6 +199,7 @@ class BlogController extends Controller {
     }
     ctx.body = resMsg;
   }
+
   // 删除分类信息
   async delCategory() {
     const { ctx } = this;
@@ -215,6 +226,7 @@ class BlogController extends Controller {
     }
     ctx.body = resMsg;
   }
+
   // 创建分类
   async createCategory() {
     const { ctx } = this;
@@ -237,6 +249,7 @@ class BlogController extends Controller {
     }
     ctx.body = resMsg;
   }
+
   // 获取标签列表
   async getTagList() {
     const { ctx } = this;
@@ -251,6 +264,7 @@ class BlogController extends Controller {
     resMsg.data = res;
     ctx.body = resMsg;
   }
+
   // 修改标签信息
   async modifyTag() {
     const { ctx } = this;
@@ -267,6 +281,7 @@ class BlogController extends Controller {
     }
     ctx.body = resMsg;
   }
+
   // 删除标签，如果提交一个id字符串，删除该标签；如果提交一个标签的数组，则删除该数组匹配的所有标签
   async delTag() {
     const { ctx } = this;
@@ -293,6 +308,7 @@ class BlogController extends Controller {
     }
     ctx.body = resMsg;
   }
+
   // 创建标签
   async createTag() {
     const { ctx } = this;
@@ -315,6 +331,7 @@ class BlogController extends Controller {
     }
     ctx.body = resMsg;
   }
+
   // 获取七牛token
   async getQiniuToken() {
     const { ctx } = this;
@@ -323,8 +340,7 @@ class BlogController extends Controller {
       data: {},
       msg: '获取token成功',
     };
-    const uploadToken = await ctx.service.admin.getQiniuToken();
-    resMsg.data.token = uploadToken;
+    resMsg.data.token = await ctx.service.admin.getQiniuToken();
     ctx.body = resMsg;
   }
 

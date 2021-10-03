@@ -17,7 +17,7 @@ module.exports = {
         type: Sequelize.STRING(50),
         defaultValue: null,
       },
-      en_name: {
+      enName: {
         type: Sequelize.STRING(50),
         defaultValue: null,
       },
@@ -26,17 +26,17 @@ module.exports = {
         defaultValue: 1,
         comment: '1->正常,2->删除',
       },
-      created_at: {
+      createdTime: {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
-      updated_at: {
+      updatedTime: {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
-    }).then(() => queryInterface.addIndex('categories', [ 'en_name', 'status' ]));
+    }).then(() => queryInterface.addIndex('categories', [ 'enName', 'status' ]));
   },
 
   down: (queryInterface, Sequelize) => {
