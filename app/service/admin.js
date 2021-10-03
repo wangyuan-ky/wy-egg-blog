@@ -181,9 +181,9 @@ class BlogService extends Service {
   }
 
   // 修改分类信息
-  async modifyCategory({ _id, categoryName }) {
+  async modifyCategory({ _id, name }) {
     const { ctx } = this;
-    return await ctx.model.Category.update({ _id }, { categoryName });
+    return await ctx.model.Category.update({ _id }, { name });
   }
 
   // 删除分类信息
@@ -199,16 +199,21 @@ class BlogService extends Service {
   }
 
   // 检查重复分类
-  async checkDuplicateCategory(categoryName) {
-    const { ctx } = this;
-    const res = await ctx.model.Category.find({ categoryName });
-    return res.length === 0;
+  async checkDuplicateCategory(name) {
+    return await this.ctx.model.Category.findOne({
+      where: { name, status: 1 },
+    });
   }
 
   // 创建分类
-  async createCategory(categoryName) {
+  async createCategory(name) {
     const { ctx } = this;
-    return await ctx.model.Category.create({ categoryName, user_id: ctx.user_id });
+    return await ctx.model.Category.create({
+      name,
+      en_name: '英文名，后期扩展',
+      user_id: ctx.user_id, // 分类属于哪个用户
+      status: 1, // 正常状态
+    });
   }
 
   // 标签列表页获取标签列表，包括数量

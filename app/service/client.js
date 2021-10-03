@@ -68,7 +68,7 @@ class BlogService extends Service {
     const { ctx } = this;
     // let list = await ctx.model.Article.find({ category_id: id })
     const [ list, count ] = await Promise.all([
-      ctx.model.Article.find({ status: 0, category_id: id }, { html: 0 }).populate([{ path: 'tag_id', select: 'tagName' }, { path: 'category_id', select: 'categoryName' }]).limit(10)
+      ctx.model.Article.find({ status: 0, category_id: id }, { html: 0 }).populate([{ path: 'tag_id', select: 'tagName' }, { path: 'category_id', select: 'name' }]).limit(10)
         .skip((page - 1) * 10),
       ctx.model.Article.find({ status: 0, category_id: id }, { html: 0 }).count(),
     ]);
@@ -86,7 +86,7 @@ class BlogService extends Service {
   async searchByTag(page, id) {
     const { ctx } = this;
     const [ list, count ] = await Promise.all([
-      ctx.model.Article.find({ status: 0, tag_id: id }, { html: 0 }).populate([{ path: 'tag_id', select: 'tagName' }, { path: 'category_id', select: 'categoryName' }]).limit(10)
+      ctx.model.Article.find({ status: 0, tag_id: id }, { html: 0 }).populate([{ path: 'tag_id', select: 'tagName' }, { path: 'category_id', select: 'name' }]).limit(10)
         .skip((page - 1) * 10),
       ctx.model.Article.find({ status: 0, tag_id: id }, { html: 0 }).count(),
     ]);
@@ -108,7 +108,7 @@ class BlogService extends Service {
       { _id: id },
       { html: 0 }
     ).populate(
-      [{ path: 'tag_id', select: 'tagName' }, { path: 'category_id', select: 'categoryName' }]
+      [{ path: 'tag_id', select: 'tagName' }, { path: 'category_id', select: 'name' }]
     );
   }
 
@@ -122,7 +122,7 @@ class BlogService extends Service {
       const count = await ctx.model.Article.find({ status: 0, category_id: item._id }).count();
       res.push({
         count,
-        categoryName: item.categoryName,
+        name: item.name,
         category_id: item._id,
       });
     }

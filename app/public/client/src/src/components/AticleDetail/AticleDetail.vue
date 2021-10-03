@@ -5,7 +5,7 @@
           <p>{{article.title}}<span class="date">{{formatDate(article.created_at)}}</span></p>
         </Card>
         <div class="bar">
-          分类：<Tag @click.native="searchByCategory(article.category_id._id)" type="border" color="primary">{{article.category_id.categoryName}}</Tag>
+          分类：<Tag @click.native="searchByCategory(article.category_id._id)" type="border" color="primary">{{article.category_id.name}}</Tag>
           标签：<Tag @click.native="searchByTag(tag._id)" v-for="tag in article.tag_id" :key="tag.id" color="primary">{{tag.tagName}}</Tag>
         </div>
         <div class="container">

@@ -230,20 +230,20 @@ class BlogController extends Controller {
   // 创建分类
   async createCategory() {
     const { ctx } = this;
-    const { categoryName } = ctx.request.body;
+    const { name } = ctx.request.body;
     let res;
     const resMsg = {
       errcode: 0,
       data: {},
       msg: '分类新增成功',
     };
-    const isNew = await ctx.service.admin.checkDuplicateCategory(categoryName);
-    if (!isNew) {
+    const categoryInfo = await ctx.service.admin.checkDuplicateCategory(name);
+    if (categoryInfo && categoryInfo.id) {
       resMsg.msg = '该分类已存在';
       resMsg.errcode = 1;
     } else {
-      res = await ctx.service.admin.createCategory(categoryName);
-      if (!res._id) {
+      res = await ctx.service.admin.createCategory(name);
+      if (!res.id) {
         resMsg.msg = '分类新增失败';
       }
     }

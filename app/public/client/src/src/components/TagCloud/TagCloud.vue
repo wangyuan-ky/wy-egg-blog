@@ -3,7 +3,7 @@
     <Card>
         <h2>分类</h2>
         <div>
-          <Tag  @click.native="searchByCategory(category.category_id)" v-for="category in categories" :key="category.id" type="dot" color="primary">{{category.categoryName}}({{category.count}})</Tag>
+          <Tag  @click.native="searchByCategory(category.category_id)" v-for="category in categories" :key="category.id" type="dot" color="primary">{{category.name}}({{category.count}})</Tag>
         </div>
     </Card>
     <Card>
