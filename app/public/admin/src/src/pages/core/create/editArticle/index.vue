@@ -1,6 +1,6 @@
 <template>
   <d2-container type="full" class="page">
-    <articleForm v-if="detail._id" :topic="topic" :detail="detail">
+    <articleForm v-if="detail.id" :topic="topic" :detail="detail">
     </articleForm>
   </d2-container>
 </template>

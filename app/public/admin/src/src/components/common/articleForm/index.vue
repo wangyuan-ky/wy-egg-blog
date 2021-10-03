@@ -18,7 +18,7 @@
           v-for="item in categories"
           :key="item.value"
           :label="item.name"
-          :value="item._id">
+          :value="item.id">
         </el-option>
       </el-select>
     </div>
@@ -34,7 +34,7 @@
           v-for="item in tags"
           :key="item.value"
           :label="item.tagName"
-          :value="item._id">
+          :value="item.id">
         </el-option>
       </el-select>
     </div>
@@ -111,13 +111,13 @@ export default {
         this.tag = []
       } else {
         this.article.tag = this.detail.tag_id.map(item => {
-          return item._id
+          return item.id
         })
       }
-      this.article.category = this.detail.category_id ? this.detail.category_id._id : ''
+      this.article.category = this.detail.category_id ? this.detail.category_id.id : ''
       this.article.content = this.detail.content || ''
       this.article.title = this.detail.title || ''
-      this.article.id = this.detail._id || ''
+      this.article.id = this.detail.id || ''
     },
     submit() {
       this.article.status = 0

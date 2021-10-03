@@ -105,7 +105,7 @@ class BlogService extends Service {
     const { ctx } = this;
     console.log('\n\n\n\n\n106');
     return await ctx.model.Article.find(
-      { _id: id },
+      { id },
       { html: 0 }
     ).populate(
       [{ path: 'tag_id', select: 'tagName' }, { path: 'category_id', select: 'name' }]
@@ -119,11 +119,11 @@ class BlogService extends Service {
     const res = [];
     for (let index = 0; index < categories.length; index++) {
       const item = categories[index];
-      const count = await ctx.model.Article.find({ status: 0, category_id: item._id }).count();
+      const count = await ctx.model.Article.find({ status: 0, category_id: item.id }).count();
       res.push({
         count,
         name: item.name,
-        category_id: item._id,
+        category_id: item.id,
       });
     }
     return res;
@@ -136,11 +136,11 @@ class BlogService extends Service {
     const res = [];
     for (let index = 0; index < tags.length; index++) {
       const item = tags[index];
-      const count = await ctx.model.Article.find({ status: 0, tag_id: item._id }).count();
+      const count = await ctx.model.Article.find({ status: 0, tag_id: item.id }).count();
       res.push({
         count,
         tagName: item.tagName,
-        tag_id: item._id,
+        tag_id: item.id,
       });
     }
     return res;

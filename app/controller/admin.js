@@ -76,14 +76,14 @@ class BlogController extends Controller {
     // 如果有文章id就更新文章，否则新建文章
     if (ctx.request.body.id) {
       const res = await ctx.service.admin.updateArticle(ctx.request.body.id);
-      resMsg.data.id = res.data._id;
+      resMsg.data.id = res.data.id;
       resMsg.msg = '文章修改成功';
       if (res.oldStatus !== ctx.request.body.status) {
         resMsg.msg = '文章发布成功';
       }
     } else {
       const res = await ctx.service.admin.createArticle();
-      resMsg.data.id = res._id;
+      resMsg.data.id = res.id;
       resMsg.msg = '文章发布成功';
       if (res.status === 1) {
         resMsg.msg = '文章已存入草稿箱';
@@ -325,7 +325,7 @@ class BlogController extends Controller {
       resMsg.errcode = 1;
     } else {
       res = await ctx.service.admin.createTag(tagName);
-      if (!res._id) {
+      if (!res.id) {
         resMsg.msg = '标签新增失败';
       }
     }

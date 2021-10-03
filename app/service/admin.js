@@ -68,7 +68,7 @@ class BlogService extends Service {
   // 根据文章id获取文章详情
   async getArticleDetailByArticleId(id) {
     const { ctx } = this;
-    return await ctx.model.Article.find({ _id: id }).populate([ 'tag_id', 'category_id' ]);
+    return await ctx.model.Article.find({ id }).populate([ 'tag_id', 'category_id' ]);
   }
 
   // 根据用户id获取分类列表，只返回所有分类，用于文章编辑页
@@ -87,8 +87,8 @@ class BlogService extends Service {
   async updateArticle(id) {
     const { ctx } = this;
     const [ oldArticle, res ] = await Promise.all([
-      ctx.model.Article.findOne({ _id: id }).select('status'),
-      ctx.model.Article.update({ _id: id }, {
+      ctx.model.Article.findOne({ id }).select('status'),
+      ctx.model.Article.update({ id }, {
         user_id: ctx.user_id,
         tag_id: ctx.request.body.tag,
         category_id: ctx.request.body.category || null,
@@ -127,9 +127,9 @@ class BlogService extends Service {
     const { ctx } = this;
     if (ctx.request.body.truly) {
       // 如果truly为真，则真正删除该文章，否则改变文章的status，加入垃圾箱
-      return await ctx.model.Article.remove({ _id: id });
+      return await ctx.model.Article.remove({ id });
     }
-    return await ctx.model.Article.update({ _id: id }, { status: 2 });
+    return await ctx.model.Article.update({ id }, { status: 2 });
   }
 
   // 根据文章id的数组批量删除文章
@@ -137,21 +137,21 @@ class BlogService extends Service {
     const { ctx } = this;
     if (ctx.request.body.truly) {
       // 如果truly为真，则真正删除该文章，否则改变文章的status，加入垃圾箱
-      return await ctx.model.Article.remove({ _id: { $in: list } });
+      return await ctx.model.Article.remove({ id: { $in: list } });
     }
-    return await ctx.model.Article.update({ _id: { $in: list } }, { status: 2 }, { multi: true });
+    return await ctx.model.Article.update({ id: { $in: list } }, { status: 2 }, { multi: true });
   }
 
   // 根据文章id恢复文章至垃圾箱文章
   async recoveryArticleById(id) {
     const { ctx } = this;
-    return await ctx.model.Article.update({ _id: id }, { status: 1 });
+    return await ctx.model.Article.update({ id }, { status: 1 });
   }
 
   // 根据文章id的数组批量恢复文章至垃圾箱文章
   async recoveryArticleBatch(list) {
     const { ctx } = this;
-    return await ctx.model.Article.update({ _id: { $in: list } }, { status: 1 }, { multi: true });
+    return await ctx.model.Article.update({ id: { $in: list } }, { status: 1 }, { multi: true });
   }
 
   // 分类列表页获取分类列表，包括数量
@@ -181,21 +181,29 @@ class BlogService extends Service {
   }
 
   // 修改分类信息
-  async modifyCategory({ _id, name }) {
+  async modifyCategory(category) {
+    const { id, name } = category;
     const { ctx } = this;
-    return await ctx.model.Category.update({ _id }, { name });
+    return await ctx.model.Category.update(
+      {
+        name,
+      },
+      {
+        where: { id },
+      }
+    );
   }
 
   // 删除分类信息
   async delCategory(id) {
     const { ctx } = this;
-    return await ctx.model.Category.remove({ _id: id });
+    return await ctx.model.Category.remove({ id });
   }
 
   // 批量删除分类信息
   async delCategoryBatch(list) {
     const { ctx } = this;
-    return await ctx.model.Category.remove({ _id: { $in: list } });
+    return await ctx.model.Category.remove({ id: { $in: list } });
   }
 
   // 检查重复分类
@@ -230,21 +238,21 @@ class BlogService extends Service {
   }
 
   // 修改标签
-  async modifyTag({ _id, tagName }) {
+  async modifyTag({ id, tagName }) {
     const { ctx } = this;
-    return await ctx.model.Tag.update({ _id }, { tagName });
+    return await ctx.model.Tag.update({ id }, { tagName });
   }
 
   // 删除标签
   async delTag(id) {
     const { ctx } = this;
-    return await ctx.model.Tag.remove({ _id: id });
+    return await ctx.model.Tag.remove({ id });
   }
 
   // 批量删除标签
   async delTagBatch(list) {
     const { ctx } = this;
-    return await ctx.model.Tag.remove({ _id: { $in: list } });
+    return await ctx.model.Tag.remove({ id: { $in: list } });
   }
 
   // 检查重复标签

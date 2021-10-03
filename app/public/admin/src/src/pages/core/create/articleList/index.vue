@@ -41,8 +41,8 @@
       label="操作"
       show-overflow-tooltip>
       <template slot-scope="scope">
-        <el-button type="primary" icon="el-icon-edit" @click="toEdit(scope.row._id)">编辑</el-button>
-        <el-button type="danger" icon="el-icon-delete" @click="handleDel(scope.row._id)">删除</el-button>
+        <el-button type="primary" icon="el-icon-edit" @click="toEdit(scope.row.id)">编辑</el-button>
+        <el-button type="danger" icon="el-icon-delete" @click="handleDel(scope.row.id)">删除</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -159,7 +159,7 @@ export default {
     },
     handleSelectionChange(val) {
       this.selectedList = val.map(item => {
-        return item._id
+        return item.id
       })
     },
     timeFormatter(row, column, cellValue, index) {

@@ -45,7 +45,7 @@
         <el-button v-show="scope.row.readonly" type="primary" icon="el-icon-edit" @click="Edit(scope.$index)">修改</el-button>
         <el-button class="no-margin" v-show="!scope.row.readonly" type="primary" icon="el-icon-check" @click="comfirm(scope.$index)">确认</el-button>
         <el-button class="no-margin" v-show="!scope.row.readonly" type="warning" icon="el-icon-close" @click="cancle(scope.$index)">取消</el-button>
-        <el-button type="danger" icon="el-icon-delete" @click="del(scope.row._id)">删除</el-button>
+        <el-button type="danger" icon="el-icon-delete" @click="del(scope.row.id)">删除</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -125,10 +125,10 @@ export default {
         type: 'warning',
         center: true
       }).then(() => {
-        let { _id, tagName } = this.tagList[index]
+        let { id, tagName } = this.tagList[index]
         this.tagList[index].readonly = true
         // 调用修改标签接口
-        this.modifyTag({ _id, tagName })
+        this.modifyTag({ id, tagName })
       }).catch(() => {
         this.cancle(index)
       })
@@ -199,7 +199,7 @@ export default {
     },
     handleSelectionChange(val) {
       this.selectedList = val.map(item => {
-        return item._id
+        return item.id
       })
     }
   }

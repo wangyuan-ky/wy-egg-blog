@@ -6,8 +6,8 @@
         <mavonEditor class="article" codeStyle="dark" :value="article.content" :toolbarsFlag="toolbarsFlag" :subfield="toolbarsFlag" defaultOpen="preview"></mavonEditor>
         <p><span @click="toDetail(article)" class="read-more">阅读全文 >></span></p>
         <p>
-          分类：<Tag v-if="article.category_id" @click.native="searchByCategory(article.category_id._id)" type="border" color="primary">{{article.category_id.name}}</Tag>
-          标签：<Tag v-for="tag in article.tag_id" @click.native="searchByTag(tag._id)" :key="tag.id" color="primary">{{tag.tagName}}</Tag>
+          分类：<Tag v-if="article.category_id" @click.native="searchByCategory(article.category_id.id)" type="border" color="primary">{{article.category_id.name}}</Tag>
+          标签：<Tag v-for="tag in article.tag_id" @click.native="searchByTag(tag.id)" :key="tag.id" color="primary">{{tag.tagName}}</Tag>
         </p>
       </Card>
     </div>
