@@ -197,19 +197,37 @@ class BlogService extends Service {
   // 删除分类信息
   async delCategory(id) {
     const { ctx } = this;
-    return await ctx.model.Category.remove({ id });
+    return await ctx.model.Category.update(
+      {
+        status: 2, // 假删，状态由 1 变成 2
+      },
+      {
+        where: { id },
+      }
+    );
   }
 
   // 批量删除分类信息
   async delCategoryBatch(list) {
     const { ctx } = this;
-    return await ctx.model.Category.remove({ id: { $in: list } });
+    return await ctx.model.Category.update(
+      {
+        status: 2, // 假删，状态由 1 变成 2
+      },
+      {
+        where: { id: list },
+      }
+    );
   }
 
   // 检查重复分类
   async checkDuplicateCategory(name) {
-    return await this.ctx.model.Category.findOne({
-      where: { name, status: 1 },
+    const { ctx } = this;
+    return await ctx.model.Category.findOne({
+      where: {
+        name,
+        status: 1,
+      },
     });
   }
 
@@ -219,7 +237,6 @@ class BlogService extends Service {
     return await ctx.model.Category.create({
       name,
       en_name: '英文名，后期扩展',
-      user_id: ctx.user_id, // 分类属于哪个用户
       status: 1, // 正常状态
     });
   }

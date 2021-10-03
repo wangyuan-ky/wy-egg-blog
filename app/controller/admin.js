@@ -212,7 +212,7 @@ class BlogController extends Controller {
     let res;
     if (id instanceof Array) {
       res = await ctx.service.admin.delCategoryBatch(id);
-    } else if (typeof id === 'string') {
+    } else if (typeof id === 'string' || typeof id === 'number') {
       res = await ctx.service.admin.delCategory(id);
     } else {
       resMsg.msg = '参数类型应为数组或字符串';
