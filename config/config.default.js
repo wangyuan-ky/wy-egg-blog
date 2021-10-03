@@ -7,7 +7,7 @@
 
 'use strict';
 
-const { USERNAME, PASSWORD, PORT, HOST, DATABASE, EXPIRES } = require('./secret');
+const { USERNAME, PASSWORD, PORT, HOST, DATABASE, EXPIRES, SECRET } = require('./secret');
 
 /**
  * @param {Egg.EggAppInfo} appInfo app info
@@ -21,7 +21,7 @@ module.exports = appInfo => {
 
   config.keys = appInfo.name + '_1586057841215_9419';
   config.jwt = {
-    cert: 'huanggegehaoshuai', // jwt秘钥
+    cert: SECRET, // jwt秘钥
   };
   config.session = {
     maxAge: EXPIRES,
@@ -43,7 +43,13 @@ module.exports = appInfo => {
   config.auth = {
     enable: true,
     ignore: [
-      '/c/getArticleList',
+      // admin 无需授权 路由过滤
+      '/getCaptcha', // 获取图片验证码
+      '/login', // 帐号密码登录
+      '/getArticleList', // 获取所有文章列表，如果有传keyword,则根据keyword搜索
+
+      // client 无需授权 路由过滤
+      '/c/getArticleList', // 获取所有文章列表，如果有传 keyword,则根据 keyword 搜索
       '/c/getArticleDetail',
     ],
   };

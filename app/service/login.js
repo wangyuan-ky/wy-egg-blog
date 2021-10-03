@@ -8,6 +8,9 @@
 const Service = require('egg').Service;
 const jwt = require('jsonwebtoken');
 const svgCaptcha = require('svg-captcha');
+const { generatePassWord } = require('../extend/helper');
+const { EXPIRES } = require('../../config/secret');
+
 class LoginService extends Service {
 
   // 生成验证码
@@ -34,22 +37,32 @@ class LoginService extends Service {
   // 登录操作
   async login({ username, password }) {
     const { ctx, app } = this;
-    const userData = await ctx.model.User.find({
-      userName: username,
-      password,
-    }, { password: 0, __v: 0 });
-    // 找不到则返回false
-    if (userData.length === 0) {
+    const userData = await ctx.model.User.findOne({
+      where: {
+        username,
+        status: 1,
+        password: generatePassWord(password),
+      },
+    });
+
+    // 找不到则返回 false
+    if (!userData || !userData.username) {
       return false;
     }
     // 找到则以用户id生成token
-    const token = jwt.sign({
-      id: userData[0]._id,
-    }, app.config.jwt.cert, {
-      expiresIn: '10h', // token过期时间
-    });
+    const token = jwt.sign(
+      {
+        id: userData.id,
+        email: userData.email,
+        type: userData.account_type,
+      },
+      app.config.jwt.cert,
+      {
+        expiresIn: EXPIRES, // token过期时间
+      }
+    );
     return {
-      user: userData[0],
+      user: userData,
       token,
     };
   }
