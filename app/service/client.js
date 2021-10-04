@@ -56,6 +56,7 @@ class BlogService extends Service {
     // 截出预览部分
     rows.map(item => {
       item.content = item.content.split('<!-- more -->')[0];
+      // item.content = item.content.substring(0, 100);
       return item;
     });
     return {
@@ -103,25 +104,76 @@ class BlogService extends Service {
 
   async getArticleDetailByArticleId(id) {
     const { ctx } = this;
-    console.log('\n\n\n\n\n106');
-    return await ctx.model.Article.find(
-      { id },
-      { html: 0 }
-    ).populate(
-      [{ path: 'tag_id', select: 'name' }, { path: 'category_id', select: 'name' }]
-    );
+    return await ctx.model.Article.findOne({
+      where: { id },
+      include: [
+        {
+          model: ctx.model.Tag,
+          as: 'tag',
+        },
+        {
+          model: ctx.model.Category,
+          as: 'category',
+        },
+        {
+          model: ctx.model.User,
+          as: 'user',
+          attributes: [
+            'id',
+            'username',
+            'email',
+            'nickname',
+            'total_view',
+            'total_like',
+            'total_comment',
+            'profession',
+            'avatar',
+            'github',
+            'weibo',
+            'website',
+            'gitee',
+          ],
+        },
+      ],
+    });
   }
 
   // 获取分类及数量
   async getCategoriesCount() {
     const { ctx } = this;
-    const categories = await ctx.model.Category.find({}, { __v: 0, user_id: 0 });
+    const categories = await ctx.model.Category.findAll({
+      where: { status: 1 },
+      include: [
+        {
+          model: ctx.model.Tag,
+          as: 'tags',
+        },
+      ],
+    });
     const res = [];
     for (let index = 0; index < categories.length; index++) {
       const item = categories[index];
-      const count = await ctx.model.Article.find({ status: 0, category_id: item.id }).count();
+      const articleList = await ctx.model.Article.findAll({
+        where: { status: 1, category_id: item.id },
+        order: [[ 'createdAt', 'DESC' ]], // 创建时间，倒序
+        include: [
+          {
+            model: ctx.model.Tag,
+            as: 'tag',
+          },
+          {
+            model: ctx.model.Category,
+            as: 'category',
+          },
+          {
+            model: ctx.model.User,
+            as: 'user',
+            attributes: [ 'id', 'username', 'email', 'nickname' ],
+          },
+        ],
+      });
       res.push({
-        count,
+        count: articleList.length,
         name: item.name,
         category_id: item.id,
       });
@@ -132,13 +184,35 @@ class BlogService extends Service {
   // 获取标签及数量
   async getTagsCount() {
     const { ctx } = this;
-    const tags = await ctx.model.Tag.find({}, { __v: 0, user_id: 0 });
+    const tags = await ctx.model.Tag.findAll({
+      where: { status: 1 },
+    });
+    console.log('\n\n\n\ntags =');
+    console.log(JSON.stringify(tags));
     const res = [];
     for (let index = 0; index < tags.length; index++) {
       const item = tags[index];
-      const count = await ctx.model.Article.find({ status: 0, tag_id: item.id }).count();
+      const articleList = await ctx.model.Article.findAll({
+        where: { status: 1, tag_id: item.id },
+        order: [[ 'createdAt', 'DESC' ]], // 创建时间，倒序
+        include: [
+          {
+            model: ctx.model.Tag,
+            as: 'tag',
+          },
+          {
+            model: ctx.model.Category,
+            as: 'category',
+          },
+          {
+            model: ctx.model.User,
+            as: 'user',
+            attributes: [ 'id', 'username', 'email', 'nickname' ],
+          },
+        ],
+      });
       res.push({
-        count,
+        count: articleList.length,
         name: item.name,
         tag_id: item.id,
       });

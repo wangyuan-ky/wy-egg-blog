@@ -50,6 +50,7 @@ module.exports = appInfo => {
       /** client 无需授权 路由过滤 */
       '/c/getArticleList', // 获取所有文章列表，如果有传 keyword,则根据 keyword 搜索
       '/c/getArticleDetail',
+      '/c/getTagsAndCategories',
     ],
   };
 

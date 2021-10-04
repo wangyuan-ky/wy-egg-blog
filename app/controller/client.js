@@ -78,7 +78,7 @@ class BlogController extends Controller {
       msg: 'success',
     };
     const articleDetail = await ctx.service.client.getArticleDetailByArticleId(article_id);
-    resMsg.data = articleDetail[0];
+    resMsg.data = articleDetail;
     ctx.body = resMsg;
   }
 
