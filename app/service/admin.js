@@ -74,13 +74,23 @@ class BlogService extends Service {
   // 根据用户id获取分类列表，只返回所有分类，用于文章编辑页
   async getCategoryListById(id) {
     const { ctx } = this;
-    return await ctx.model.Category.find({ user_id: id }, { __v: 0, user_id: 0 });
+    return ctx.model.Category.findAll({
+      where: { status: 1, user_id: id },
+      include: [
+        {
+          model: this.ctx.model.Tag,
+          as: 'tags',
+        },
+      ],
+    });
   }
 
   // 根据用户id获取标签列表，只返回所有标签，用于文章编辑页
   async getTagsListById(id) {
     const { ctx } = this;
-    return await ctx.model.Tag.find({ user_id: id }, { __v: 0, user_id: 0 });
+    return ctx.model.Tag.findAll({
+      where: { status: 1, user_id: id },
+    });
   }
 
   // 更新文章
