@@ -2,10 +2,10 @@
   <div>
     <h1 class="title">404 page not found</h1>
     <ul class="info">
-      <li>邱煌</li>
-      <li>码云: <a href="https://gitee.com/wadejs">https://gitee.com/wadejs</a></li>
-      <li>github: <a href="https://github.com/wadejs">https://github.com/wadejs</a></li>
-      <li>QQ: <a href="tencent://message/?uin=379664673&Site=&Menu=yes">379664673</a></li>
+      <li>王媛</li>
+      <li>码云: <a href="https://gitee.com/wangyuan-ky" target="_blank">https://gitee.com/wangyuan-ky</a></li>
+      <li>github: <a href="https://github.com/wangyuan-ky" target="_blank">https://github.com/wangyuan-ky</a></li>
+      <li>QQ: <a href="tencent://message/?uin=342007229&Site=&Menu=yes">342007229</a></li>
     </ul>
   </div>
 </template>

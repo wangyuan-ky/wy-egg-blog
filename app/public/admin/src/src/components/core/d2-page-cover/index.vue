@@ -52,8 +52,17 @@ export default {
   justify-content: center;
   align-items: center;
   .page-index-article-body__logo {
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 300ms linear;
     img {
       width: 200px;
+    }
+    &:hover {
+      transform: translateY(-10px);
     }
   }
   .page-index-article-body__title {

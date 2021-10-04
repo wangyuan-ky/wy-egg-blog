@@ -10,8 +10,8 @@
       <!-- 顶栏 -->
       <div class="d2-theme-header">
         <div class="logo-group" :style="{width: collapse ? asideWidthCollapse : asideWidth}">
-          <img v-if="collapse" :src="`${$assetsPublicPath}static/image/theme/${themeActiveSetting.name}/logo/logo3-s.png`">
-          <img v-else :src="`${$assetsPublicPath}static/image/theme/${themeActiveSetting.name}/logo/logo3.png`">
+          <img v-if="collapse" src="http://r0e3p8ohy.hb-bkt.clouddn.com/wy_s_blog_admin.png">
+          <img v-else src="http://r0e3p8ohy.hb-bkt.clouddn.com/wy_s_blog_admin.png">
           <!-- <img v-if="collapse" :src="`${$assetsPublicPath}static/image/theme/${themeActiveSetting.name}/logo/icon-only.png`">
           <img v-else :src="`${$assetsPublicPath}static/image/theme/${themeActiveSetting.name}/logo/all.png`"> -->
         </div>
@@ -108,6 +108,6 @@ export default {
 </style>
 <style lang="scss" scoped>
 .logo-group img{
-  width: 100%;
+  width: auto;
 }
 </style>

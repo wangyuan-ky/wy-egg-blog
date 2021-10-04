@@ -21,7 +21,7 @@ util.uuid = function () {
  * @param {string} title 标题
  */
 util.title = function (title) {
-  const prefix = 'wadejs'
+  const prefix = 'wangyuan-ky'
   window.document.title = `${prefix}${title ? ` | ${title}` : ''}`
 }
 

@@ -4,7 +4,7 @@
     <div class="layer flex-center">
       <!-- logo部分 -->
       <div class="logo-group">
-        <img class="avatar" :src="`${$assetsPublicPath}static/image/me/qqq.png`" alt="logo">
+        <img class="avatar" src="http://r0e3p8ohy.hb-bkt.clouddn.com/me.jpg" alt="logo">
       </div>
       <!-- 表单部分 -->
       <div class="form-group" @keydown.enter="submit">

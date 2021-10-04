@@ -15,7 +15,7 @@
 export default {
   data () {
     return {
-      url: 'https://github.com/wadejs'
+      url: 'https://github.com/wangyuan-ky'
     }
   },
   methods: {

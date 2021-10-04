@@ -1,28 +1,28 @@
 <template>
-  <div>
+  <div class="left-side">
     <router-link to="/">
-      <Avatar class="avatar" :src="`${$assetsPublicPath}static/qqq.jpg`" />
+      <Avatar class="avatar" src="http://r0e3p8ohy.hb-bkt.clouddn.com/me.jpg" />
     </router-link>
-    <p class="desc">药药切克闹</p>
+    <p class="desc">王媛的个人博客</p>
     <Input @on-search="search" v-model="keyword" class="search-input" search enter-button placeholder="根据标题或内容搜索" />
     <router-link class="category" to="/TagCloud">分页/标签</router-link>
     <div class="icon-group">
       <Tooltip content="github" placement="top">
-        <a href="https://github.com/wadejs"><i class="iconfont">&#xe7ab;</i></a>
+        <a href="https://github.com/wangyuan-ky" target="_blank"><i class="iconfont">&#xe7ab;</i></a>
       </Tooltip>
       <Tooltip content="码云" placement="top">
-        <a href="https://gitee.com/wadejs"><i class="iconfont">&#xe600;</i></a>
+        <a href="https://gitee.com/wangyuan-ky" target="_blank"><i class="iconfont">&#xe600;</i></a>
       </Tooltip>
       <Tooltip content="知乎" placement="top">
-        <a href="https://www.zhihu.com/people/huang-ge-ge-65/activities"><i class="iconfont">&#xe69a;</i></a>
+        <a href="https://www.zhihu.com/people/mu-xiao-yuan-88" target="_blank"><i class="iconfont">&#xe69a;</i></a>
       </Tooltip>
       <Tooltip content="QQ" placement="top">
-        <a href="tencent://message/?uin=379664673&Site=&Menu=yes"><i class="iconfont">&#xe657;</i></a>
+        <a href="tencent://message/?uin=342007229&Site=&Menu=yes"><i class="iconfont">&#xe657;</i></a>
       </Tooltip>
     </div>
     <footer>
-      <p>Theme by wadejs</p>
-      <p>备案号：闽ICP备123321122号</p>
+      <p>Theme by wangyuan</p>
+      <p>备案号：666666</p>
     </footer>
   </div>
 </template>
@@ -99,4 +99,11 @@ footer
 @media (max-width: 780px)
   .category
     margin-top 10px
+</style>
+<style lang='stylus'>
+.left-side {
+  .avatar > img {
+    height auto
+  }
+}
 </style>
