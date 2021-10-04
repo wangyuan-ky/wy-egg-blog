@@ -347,7 +347,7 @@ class BlogService extends Service {
     // 这里需要七牛的Access Key和Secret Key
     const mac = new qiniu.auth.digest.Mac(app.config.qiniu.ak, app.config.qiniu.sk);
     const options = {
-      scope: 'blog',
+      scope: 'blog-spaze', // 七牛云的 bucket
     };
     const putPolicy = new qiniu.rs.PutPolicy(options);
     const uploadToken = putPolicy.uploadToken(mac);
