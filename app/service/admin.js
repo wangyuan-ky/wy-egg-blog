@@ -282,26 +282,49 @@ class BlogService extends Service {
   // 删除标签
   async delTag(id) {
     const { ctx } = this;
-    return await ctx.model.Tag.remove({ id });
+    return await ctx.model.Tag.update(
+      {
+        status: 2, // 假删，状态由 1 变成 2
+      },
+      {
+        where: { id },
+      }
+    );
   }
 
   // 批量删除标签
-  async delTagBatch(list) {
+  async delTagBatch(idList) {
     const { ctx } = this;
-    return await ctx.model.Tag.remove({ id: { $in: list } });
+    return await ctx.model.Tag.update(
+      {
+        status: 2, // 假删，状态由 1 变成 2
+      },
+      {
+        where: { id: idList },
+      }
+    );
   }
 
   // 检查重复标签
   async checkDuplicateTag(name) {
     const { ctx } = this;
-    const res = await ctx.model.Tag.find({ name });
-    return res.length === 0;
+    return await ctx.model.Tag.findOne({
+      where: {
+        name,
+        status: 1,
+      },
+    });
   }
 
   // 创建标签
   async createTag(name) {
     const { ctx } = this;
-    return await ctx.model.Tag.create({ name, user_id: ctx.user_id });
+    return await ctx.model.Tag.create({
+      name,
+      en_name: '英文名，后期扩展',
+      category_id: 1, // 挂载分类下
+      status: 1, // 正常状态
+    });
   }
 
   // 生成七牛token

@@ -215,7 +215,7 @@ class BlogController extends Controller {
     } else if (typeof id === 'string' || typeof id === 'number') {
       res = await ctx.service.admin.delCategory(id);
     } else {
-      resMsg.msg = '参数类型应为数组或字符串';
+      resMsg.msg = '参数类型应为数组、数字或者字符串';
       resMsg.errcode = 1;
       ctx.body = resMsg;
       return;
@@ -232,7 +232,6 @@ class BlogController extends Controller {
   async createCategory() {
     const { ctx } = this;
     const { name } = ctx.request.body;
-    let res;
     const resMsg = {
       errcode: 0,
       data: {},
@@ -243,8 +242,8 @@ class BlogController extends Controller {
       resMsg.msg = '该分类已存在';
       resMsg.errcode = 1;
     } else {
-      res = await ctx.service.admin.createCategory(name);
-      if (!res.id) {
+      const newCategory = await ctx.service.admin.createCategory(name);
+      if (!newCategory.id) {
         resMsg.msg = '分类新增失败';
       }
     }
@@ -294,15 +293,15 @@ class BlogController extends Controller {
     let res;
     if (id instanceof Array) {
       res = await ctx.service.admin.delTagBatch(id);
-    } else if (typeof id === 'string') {
+    } else if (typeof id === 'string' || typeof id === 'number') {
       res = await ctx.service.admin.delTag(id);
     } else {
-      resMsg.msg = '参数类型应为数组或字符串';
+      resMsg.msg = '参数类型应为数组、数字或者字符串';
       resMsg.errcode = 1;
       ctx.body = resMsg;
       return;
     }
-    if (res.n === 0) {
+    if (res && +res[0] <= 0) {
       resMsg.msg = '标签id不存在';
       resMsg.errcode = 1;
     }
@@ -313,19 +312,18 @@ class BlogController extends Controller {
   async createTag() {
     const { ctx } = this;
     const { name } = ctx.request.body;
-    let res;
     const resMsg = {
       errcode: 0,
       data: {},
       msg: '标签新增成功',
     };
-    const isNew = await ctx.service.admin.checkDuplicateTag(name);
-    if (!isNew) {
+    const tagInfo = await ctx.service.admin.checkDuplicateTag(name);
+    if (tagInfo && tagInfo.id) {
       resMsg.msg = '该标签已存在';
       resMsg.errcode = 1;
     } else {
-      res = await ctx.service.admin.createTag(name);
-      if (!res.id) {
+      const newTag = await ctx.service.admin.createTag(name);
+      if (!newTag.id) {
         resMsg.msg = '标签新增失败';
       }
     }
