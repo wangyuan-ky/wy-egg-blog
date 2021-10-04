@@ -23,7 +23,7 @@
       width="55">
     </el-table-column>
     <el-table-column
-      prop="created_at"
+      prop="createdAt"
       sortable
       label="日期"
       :formatter="timeFormatter"
@@ -163,6 +163,7 @@ export default {
       })
     },
     timeFormatter(row, column, cellValue, index) {
+      console.log('cellValue =', cellValue);
       return moment(new Date(cellValue)).format('YYYY-MM-DD HH:mm:ss')
     },
     handleSearch() {
