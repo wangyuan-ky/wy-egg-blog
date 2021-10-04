@@ -50,7 +50,7 @@
       class="mark-editor"/>
     </div>
     <el-button type="primary" @click="submit">发布</el-button>
-    <el-button type="warning" v-if="this.detail.status !== 0"  @click="saveDraft">{{this.detail.status === undefined ? '存为草稿' : '保存'}}</el-button>
+    <el-button type="warning" v-if="this.detail.status !== 1"  @click="saveDraft">{{this.detail.status === undefined ? '存为草稿' : '保存'}}</el-button>
   </div>
 </template>
 <script>
@@ -71,7 +71,7 @@ export default {
         tag: [],
         content: '',
         html: '',
-        status: 0
+        status: 1
       },
       bodyStyle: {
         padding: '10px'
@@ -107,24 +107,26 @@ export default {
       })
     },
     _initData() {
-      if (!this.detail.tag_id) {
-        this.tag = []
-      } else {
+      if (this.detail.tag_id && this.detail.tag_id.length) {
         this.article.tag = this.detail.tag_id.map(item => {
           return item.id
         })
+      } else {
+        this.article.tag = [this.detail.tag_id]
+        this.tag = []
       }
-      this.article.category = this.detail.category_id ? this.detail.category_id.id : ''
+      this.article.tag = this.article.tag.filter(num => num)
+      this.article.category = this.detail.category ? this.detail.category.id : ''
       this.article.content = this.detail.content || ''
       this.article.title = this.detail.title || ''
       this.article.id = this.detail.id || ''
     },
     submit() {
-      this.article.status = 0
+      this.article.status = 1
       this.postArticle()
     },
     saveDraft() {
-      this.article.status = 1
+      this.article.status = 2
       this.postArticle()
     },
     postArticle() {
@@ -142,7 +144,7 @@ export default {
                 tag: [],
                 content: '',
                 html: '',
-                status: 0
+                status: 1
               }
               this.$router.push(`editArticle/${res.data.id}`)
             }

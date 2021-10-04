@@ -11,7 +11,7 @@ class BlogController extends Controller {
   // 获取所有文章列表
   async getArticleList() {
     const { ctx } = this;
-    const { page = 1, keyword = '', status = 0 } = ctx.query;
+    const { page = 1, keyword = '', status = 1 } = ctx.query;
     const resMsg = {
       errcode: 0,
       data: {},
@@ -35,7 +35,7 @@ class BlogController extends Controller {
       msg: 'success',
     };
     const articleDetail = await ctx.service.admin.getArticleDetailByArticleId(article_id);
-    resMsg.data = articleDetail[0];
+    resMsg.data = articleDetail;
     ctx.body = resMsg;
   }
 
@@ -85,7 +85,7 @@ class BlogController extends Controller {
       const res = await ctx.service.admin.createArticle();
       resMsg.data.id = res.id;
       resMsg.msg = '文章发布成功';
-      if (res.status === 1) {
+      if (res.status === 2) {
         resMsg.msg = '文章已存入草稿箱';
       }
     }

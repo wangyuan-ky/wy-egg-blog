@@ -69,7 +69,7 @@ export default {
       selectedList: [],
       keyword: '',
       page: 1,
-      status: 1,
+      status: 2,
       sumList: 0
     }
   },

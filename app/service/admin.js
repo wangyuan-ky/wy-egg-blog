@@ -15,6 +15,7 @@ class BlogService extends Service {
     const pageSize = '10';
     const where = {
       status,
+      user_id: id,
       [Op.or]: [
         { title: { [Op.like]: `%${keyword || ''}%` } },
         { content: { [Op.like]: `%${keyword || ''}%` } },
@@ -39,15 +40,15 @@ class BlogService extends Service {
       ],
       include: [
         {
-          model: this.ctx.model.Tag,
+          model: ctx.model.Tag,
           as: 'tag',
         },
         {
-          model: this.ctx.model.Category,
+          model: ctx.model.Category,
           as: 'category',
         },
         {
-          model: this.ctx.model.User,
+          model: ctx.model.User,
           as: 'user',
           attributes: [ 'id', 'username', 'email', 'nickname' ],
         },
@@ -56,7 +57,9 @@ class BlogService extends Service {
 
     // 截出预览部分
     rows.map(item => {
-      item.content = item.content.split('<!-- more -->')[0];
+      if (item.content && item.content.split) {
+        item.content = item.content.split('<!-- more -->')[0];
+      }
       return item;
     });
     return {
@@ -68,7 +71,38 @@ class BlogService extends Service {
   // 根据文章id获取文章详情
   async getArticleDetailByArticleId(id) {
     const { ctx } = this;
-    return await ctx.model.Article.find({ id }).populate([ 'tag_id', 'category_id' ]);
+    return await ctx.model.Article.findOne({
+      where: { id },
+      include: [
+        {
+          model: ctx.model.Tag,
+          as: 'tag',
+        },
+        {
+          model: ctx.model.Category,
+          as: 'category',
+        },
+        {
+          model: ctx.model.User,
+          as: 'user',
+          attributes: [
+            'id',
+            'username',
+            'email',
+            'nickname',
+            'total_view',
+            'total_like',
+            'total_comment',
+            'profession',
+            'avatar',
+            'github',
+            'weibo',
+            'website',
+            'gitee',
+          ],
+        },
+      ],
+    });
   }
 
   // 根据用户id获取分类列表，只返回所有分类，用于文章编辑页
@@ -78,7 +112,7 @@ class BlogService extends Service {
       where: { status: 1, user_id: id },
       include: [
         {
-          model: this.ctx.model.Tag,
+          model: ctx.model.Tag,
           as: 'tags',
         },
       ],
@@ -97,8 +131,8 @@ class BlogService extends Service {
   async updateArticle(id) {
     const { ctx } = this;
     const [ oldArticle, res ] = await Promise.all([
-      ctx.model.Article.findOne({ id }).select('status'),
-      ctx.model.Article.update({ id }, {
+      ctx.model.Article.findOne({ where: { id } }),
+      ctx.model.Article.update({
         user_id: ctx.user_id,
         tag_id: ctx.request.body.tag,
         category_id: ctx.request.body.category || null,
@@ -107,9 +141,9 @@ class BlogService extends Service {
         title: ctx.request.body.title,
         updated_at: Date(),
         status: ctx.request.body.status,
-      }),
+      }, { where: { id } }),
     ]);
-    if (res.n > 0) {
+    if (res && +res[0] > 0) {
       return {
         data: res,
         oldStatus: oldArticle.status,
@@ -120,9 +154,14 @@ class BlogService extends Service {
   // 创建文章
   async createArticle() {
     const { ctx } = this;
+    let tags = [];
+    if (ctx.request.body.tag && ctx.request.body.tag.length) {
+      tags = ctx.request.body.tag.filter(item => item);
+    }
     return await ctx.model.Article.create({
       user_id: ctx.user_id,
-      tag_id: ctx.request.body.tag,
+      tag_id: tags && tags[0],
+      tags,
       category_id: ctx.request.body.category || null,
       content: ctx.request.body.content,
       html: ctx.request.body.html,
@@ -180,7 +219,7 @@ class BlogService extends Service {
       order: [[ 'createdAt', 'DESC' ]], // 创建时间，倒序
       include: [
         {
-          model: this.ctx.model.Tag,
+          model: ctx.model.Tag,
           as: 'tags',
         },
       ],
