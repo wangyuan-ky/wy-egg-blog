@@ -192,8 +192,8 @@ class BlogController extends Controller {
       data: {},
       msg: '分类修改成功',
     };
-    const res = await ctx.service.admin.modifyCategory(category);
-    if (res.n === 0) {
+    const [ count ] = await ctx.service.admin.modifyCategory(category);
+    if (+count <= 0) {
       resMsg.msg = '该分类id不存在';
       resMsg.errcode = 1;
     }
@@ -220,7 +220,8 @@ class BlogController extends Controller {
       ctx.body = resMsg;
       return;
     }
-    if (res.n === 0) {
+
+    if (res && +res[0] <= 0) {
       resMsg.msg = '分类id不存在';
       resMsg.errcode = 1;
     }
@@ -273,8 +274,8 @@ class BlogController extends Controller {
       data: {},
       msg: '标签修改成功',
     };
-    const res = await ctx.service.admin.modifyTag(tag);
-    if (res.n === 0) {
+    const [ count ] = await ctx.service.admin.modifyTag(tag);
+    if (+count <= 0) {
       resMsg.msg = '该标签id不存在';
       resMsg.errcode = 1;
     }

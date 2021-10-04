@@ -266,9 +266,17 @@ class BlogService extends Service {
   }
 
   // 修改标签
-  async modifyTag({ id, name }) {
+  async modifyTag(lineTag) {
+    const { id, name } = lineTag;
     const { ctx } = this;
-    return await ctx.model.Tag.update({ id }, { name });
+    return await ctx.model.Tag.update(
+      {
+        name,
+      },
+      {
+        where: { id },
+      }
+    );
   }
 
   // 删除标签
