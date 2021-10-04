@@ -49,8 +49,10 @@ module.exports = appInfo => {
 
       /** client 无需授权 路由过滤 */
       '/c/getArticleList', // 获取所有文章列表，如果有传 keyword,则根据 keyword 搜索
-      '/c/getArticleDetail',
-      '/c/getTagsAndCategories',
+      '/c/getArticleDetail', // 获取文章详情
+      '/c/getTagsAndCategories', // 获取标签云（标签列表，分类列表）
+      '/c/searchByCategory', // 根据 分类ID 获取文章列表
+      '/c/searchByTag', // 根据 标签ID 获取文章列表
     ],
   };
 

@@ -66,38 +66,117 @@ class BlogService extends Service {
   }
 
   async searchByCategory(page, id) {
+    const keyword = '';
+    const pageSize = '10';
+    const where = {
+      status: 1,
+      category_id: id,
+      [Op.or]: [
+        { title: { [Op.like]: `%${keyword || ''}%` } },
+        { content: { [Op.like]: `%${keyword || ''}%` } },
+      ],
+    };
     const { ctx } = this;
-    // let list = await ctx.model.Article.find({ category_id: id })
-    const [ list, count ] = await Promise.all([
-      ctx.model.Article.find({ status: 0, category_id: id }, { html: 0 }).populate([{ path: 'tag_id', select: 'name' }, { path: 'category_id', select: 'name' }]).limit(10)
-        .skip((page - 1) * 10),
-      ctx.model.Article.find({ status: 0, category_id: id }, { html: 0 }).count(),
-    ]);
+
+    const { count, rows } = await ctx.model.Article.findAndCountAll({
+      where,
+      offset: (parseInt(page) - 1) * parseInt(pageSize),
+      limit: parseInt(pageSize),
+      order: [[ 'createdAt', 'DESC' ]], // 创建时间，倒序
+      attributes: [
+        'view', // 查看数
+        'title', // 文章标题
+        'favorite', // 点赞数
+        'id', // 文章ID
+        'content', // 文章markdown
+        'comment', // 评论
+        'cover', // 封面
+        'createdAt', // 创建时间
+      ],
+      include: [
+        {
+          model: ctx.model.Tag,
+          as: 'tag',
+        },
+        {
+          model: ctx.model.Category,
+          as: 'category',
+        },
+        {
+          model: ctx.model.User,
+          as: 'user',
+          attributes: [ 'id', 'username', 'email', 'nickname' ],
+        },
+      ],
+    });
+
     // 截出预览部分
-    list.map(item => {
-      item.content = item.content.split('<!-- more -->')[0];
+    rows.map(item => {
+      if (item.content && item.content.split) {
+        item.content = item.content.split('<!-- more -->')[0];
+      }
       return item;
     });
     return {
-      list,
+      list: rows,
       count,
     };
   }
 
   async searchByTag(page, id) {
+    const keyword = '';
+    const pageSize = '10';
+    const where = {
+      status: 1,
+      tag_id: id,
+      [Op.or]: [
+        { title: { [Op.like]: `%${keyword || ''}%` } },
+        { content: { [Op.like]: `%${keyword || ''}%` } },
+      ],
+    };
     const { ctx } = this;
-    const [ list, count ] = await Promise.all([
-      ctx.model.Article.find({ status: 0, tag_id: id }, { html: 0 }).populate([{ path: 'tag_id', select: 'name' }, { path: 'category_id', select: 'name' }]).limit(10)
-        .skip((page - 1) * 10),
-      ctx.model.Article.find({ status: 0, tag_id: id }, { html: 0 }).count(),
-    ]);
+
+    const { count, rows } = await ctx.model.Article.findAndCountAll({
+      where,
+      offset: (parseInt(page) - 1) * parseInt(pageSize),
+      limit: parseInt(pageSize),
+      order: [[ 'createdAt', 'DESC' ]], // 创建时间，倒序
+      attributes: [
+        'view', // 查看数
+        'title', // 文章标题
+        'favorite', // 点赞数
+        'id', // 文章ID
+        'content', // 文章markdown
+        'comment', // 评论
+        'cover', // 封面
+        'createdAt', // 创建时间
+      ],
+      include: [
+        {
+          model: ctx.model.Tag,
+          as: 'tag',
+        },
+        {
+          model: ctx.model.Category,
+          as: 'category',
+        },
+        {
+          model: ctx.model.User,
+          as: 'user',
+          attributes: [ 'id', 'username', 'email', 'nickname' ],
+        },
+      ],
+    });
+
     // 截出预览部分
-    list.map(item => {
-      item.content = item.content.split('<!-- more -->')[0];
+    rows.map(item => {
+      if (item.content && item.content.split) {
+        item.content = item.content.split('<!-- more -->')[0];
+      }
       return item;
     });
     return {
-      list,
+      list: rows,
       count,
     };
   }
