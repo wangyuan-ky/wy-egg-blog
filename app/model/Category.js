@@ -14,6 +14,15 @@ module.exports = app => {
       autoIncrement: true,
       comment: '行ID',
     },
+    user_id: {
+      type: INTEGER,
+      allowNull: false,
+      references: {
+        model: 'users',
+        key: 'id',
+      },
+      comment: '用户ID',
+    },
     name: {
       type: STRING(50),
       defaultValue: null,
@@ -41,6 +50,7 @@ module.exports = app => {
   Category.associate = () => {
     app.model.Category.hasMany(app.model.Article, { as: 'article' });
     app.model.Category.hasMany(app.model.Tag, { as: 'tags' });
+    app.model.Category.belongsTo(app.model.User, { as: 'user', foreignKey: 'user_id' });
   };
   return Category;
 };

@@ -11,41 +11,49 @@ module.exports = {
       {
         name: '古文',
         en_name: 'prose',
+        user_id: 1,
         category_id: 1,
       },
       {
         name: '诗歌',
         en_name: 'poetry',
+        user_id: 1,
         category_id: 1,
       },
       {
         name: '插画',
         en_name: 'inbetweening',
+        user_id: 1,
         category_id: 2,
       },
       {
         name: '测试',
         en_name: 'test',
+        user_id: 1,
         category_id: 2,
       },
       {
         name: 'Node',
         en_name: 'node',
+        user_id: 1,
         category_id: 3,
       },
       {
         name: 'Egg',
         en_name: 'egg',
+        user_id: 1,
         category_id: 3,
       },
       {
         name: 'Python',
         en_name: 'python',
+        user_id: 1,
         category_id: 3,
       },
       {
         name: 'React',
         en_name: 'react',
+        user_id: 1,
         category_id: 4,
       },
     ], {});
