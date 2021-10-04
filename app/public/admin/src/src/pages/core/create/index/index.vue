@@ -163,7 +163,6 @@ export default {
       })
     },
     timeFormatter(row, column, cellValue, index) {
-      console.log('cellValue =', cellValue);
       return moment(new Date(cellValue)).format('YYYY-MM-DD HH:mm:ss')
     },
     handleSearch() {

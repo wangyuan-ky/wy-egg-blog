@@ -176,31 +176,72 @@ class BlogService extends Service {
     const { ctx } = this;
     if (ctx.request.body.truly) {
       // 如果truly为真，则真正删除该文章，否则改变文章的status，加入垃圾箱
-      return await ctx.model.Article.remove({ id });
+      return await ctx.model.Article.destroy({
+        where: {
+          id,
+        },
+        force: true,
+      });
     }
-    return await ctx.model.Article.update({ id }, { status: 2 });
+
+    return await ctx.model.Article.update(
+      {
+        status: 3, // 假删，状态由 1 变成 2
+      },
+      {
+        where: { id },
+      }
+    );
   }
 
   // 根据文章id的数组批量删除文章
   async delArticleBatch(list) {
     const { ctx } = this;
     if (ctx.request.body.truly) {
+      console.log('198 真删');
       // 如果truly为真，则真正删除该文章，否则改变文章的status，加入垃圾箱
-      return await ctx.model.Article.remove({ id: { $in: list } });
+      return await ctx.model.Article.destroy({
+        where: {
+          id: list,
+        },
+        force: true,
+      });
     }
-    return await ctx.model.Article.update({ id: { $in: list } }, { status: 2 }, { multi: true });
+    console.log('202 假删');
+    return await ctx.model.Article.update(
+      {
+        status: 3, // 假删，状态由 1 变成 2
+      },
+      {
+        where: { id: list },
+      }
+    );
   }
 
   // 根据文章id恢复文章至垃圾箱文章
   async recoveryArticleById(id) {
     const { ctx } = this;
-    return await ctx.model.Article.update({ id }, { status: 1 });
+    return await ctx.model.Article.update(
+      {
+        status: 2,
+      },
+      {
+        where: { id },
+      }
+    );
   }
 
   // 根据文章id的数组批量恢复文章至垃圾箱文章
   async recoveryArticleBatch(list) {
     const { ctx } = this;
-    return await ctx.model.Article.update({ id: { $in: list } }, { status: 1 }, { multi: true });
+    return await ctx.model.Article.update(
+      {
+        status: 2,
+      },
+      {
+        where: { id: list },
+      }
+    );
   }
 
   // 分类列表页获取分类列表，包括数量

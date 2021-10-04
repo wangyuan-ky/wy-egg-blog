@@ -102,7 +102,7 @@ class BlogController extends Controller {
       msg: 'success',
     };
     const res = await ctx.service.admin.delArticleById(id);
-    if (res.n > 0) {
+    if (res && (+res[0] > 0 || +res > 0)) {
       resMsg.msg = '文章删除成功';
     } else {
       resMsg.msg = '文章删除失败';
@@ -121,7 +121,7 @@ class BlogController extends Controller {
       msg: 'success',
     };
     const res = await ctx.service.admin.delArticleBatch(list);
-    if (res.n > 0) {
+    if (res && (+res[0] > 0 || +res > 0)) {
       resMsg.msg = '文章删除成功';
     } else {
       resMsg.msg = '文章删除失败';
@@ -140,7 +140,7 @@ class BlogController extends Controller {
       msg: 'success',
     };
     const res = await ctx.service.admin.recoveryArticleById(id);
-    if (res.n > 0) {
+    if (res && (+res[0] > 0 || +res > 0)) {
       resMsg.msg = '文章恢复成功';
     } else {
       resMsg.msg = '文章恢复失败';
@@ -159,7 +159,7 @@ class BlogController extends Controller {
       msg: 'success',
     };
     const res = await ctx.service.admin.recoveryArticleBatch(list);
-    if (res.n > 0) {
+    if (res && (+res[0] > 0 || +res > 0)) {
       resMsg.msg = '文章恢复成功';
     } else {
       resMsg.msg = '文章恢复失败';
