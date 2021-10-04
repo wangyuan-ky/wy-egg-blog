@@ -158,6 +158,7 @@ class BlogService extends Service {
   async getCategoryList(id, page) {
     const pageSize = '10';
     const where = {
+      user_id: id,
       status: 1,
     };
     const { ctx } = this;
@@ -237,18 +238,20 @@ class BlogService extends Service {
     return await ctx.model.Category.create({
       name,
       en_name: '英文名，后期扩展',
+      user_id: ctx.user_id, // 分类属于哪个用户
       status: 1, // 正常状态
     });
   }
 
   // 标签列表页获取标签列表，包括数量
   async getTagList(page) {
-    const pageSize = '10';
+    const { ctx } = this;
     const where = {
+      user_id: ctx.user_id,
       status: 1,
     };
-    const { ctx } = this;
 
+    const pageSize = '10';
     const { count, rows } = await ctx.model.Tag.findAndCountAll({
       where,
       offset: (parseInt(page) - 1) * parseInt(pageSize),
@@ -322,7 +325,8 @@ class BlogService extends Service {
     return await ctx.model.Tag.create({
       name,
       en_name: '英文名，后期扩展',
-      category_id: 1, // 挂载分类下
+      user_id: ctx.user_id, // 挂在用户下
+      category_id: 1, // 挂在分类下
       status: 1, // 正常状态
     });
   }
