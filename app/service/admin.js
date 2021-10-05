@@ -434,6 +434,18 @@ class BlogService extends Service {
     return uploadToken;
   }
 
+  // [后台] 删除文章
+  async deleteComment(id) {
+    return this.ctx.model.Comment.update(
+      {
+        status: 2,
+      },
+      {
+        where: { id },
+      }
+    );
+  }
+
 }
 
 module.exports = BlogService;

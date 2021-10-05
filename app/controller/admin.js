@@ -342,6 +342,29 @@ class BlogController extends Controller {
     ctx.body = resMsg;
   }
 
+  // [后台] 获取文章评论列表
+  async comments() {
+    const { ctx } = this;
+    const comments = await ctx.service.client.comments();
+    ctx.body = {
+      errcode: 0,
+      data: comments,
+      msg: 'success',
+    };
+  }
+
+  // [后台] 删除文章
+  async deleteComment() {
+    const { ctx } = this;
+    const { id } = ctx.request.body;
+    await ctx.service.admin.deleteComment(id);
+    ctx.body = {
+      errcode: 0,
+      data: { id },
+      msg: 'success',
+    };
+  }
+
 }
 
 module.exports = BlogController;

@@ -5,6 +5,8 @@
 
 'use strict';
 const Sequelize = require('sequelize');
+const { literal } = require('sequelize');
+const { generatePassWord } = require('../extend/helper');
 const Op = Sequelize.Op;
 
 const Service = require('egg').Service;
@@ -297,6 +299,158 @@ class BlogService extends Service {
       });
     }
     return res;
+  }
+
+  // [前台] 获取热门文章列表
+  async hots() {
+    return this.ctx.model.Article.findAll({
+      order: [[ 'view', 'DESC' ]],
+      limit: 10,
+      attributes: [ 'view', 'title', 'favorite', 'id', 'comment' ],
+    });
+  }
+
+  async viewPlusOne(id) {
+    return this.ctx.model.Article.update(
+      {
+        view: literal('view + 1'),
+      },
+      {
+        where: { id },
+      }
+    );
+  }
+
+  async favoritePlusOne(id) {
+    return this.ctx.model.Article.update(
+      {
+        favorite: literal('favorite + 1'),
+      },
+      {
+        where: { id },
+      }
+    );
+  }
+
+  async favoriteReduceOne(id) {
+    return this.ctx.model.Article.update(
+      {
+        favorite: literal('favorite - 1'),
+      },
+      {
+        where: { id },
+      }
+    );
+  }
+
+  async commentPlusOne(id) {
+    return this.ctx.model.Article.update(
+      {
+        comment: literal('comment + 1'),
+      },
+      {
+        where: { id },
+      }
+    );
+  }
+
+  // [前/后 台] 获取文章评论列表
+  async comments(query) {
+    const where = { status: 1 };
+    if (query) where.article_id = query.id;
+    return this.ctx.model.Comment.findAll({
+      where,
+      include: [
+        {
+          model: this.ctx.model.User,
+          as: 'user',
+          attributes: [
+            'id',
+            'username',
+            'email',
+            'nickname',
+            'total_view',
+            'total_like',
+            'total_comment',
+            'profession',
+            'avatar',
+          ],
+        },
+        {
+          model: this.ctx.model.Article,
+          as: 'article',
+          attributes: [ 'view', 'title', 'favorite', 'id', 'comment' ],
+        },
+      ],
+    });
+  }
+
+  async createToursitComment(params) {
+    const { email, nickname, website } = params;
+    let user = await this.ctx.model.User.findOne({
+      where: { email: params.email },
+    });
+    if (!user) {
+      user = await this.ctx.model.User.create({
+        email,
+        nickname,
+        website,
+        account_type: 'TOURIST',
+        password: generatePassWord(params.email),
+      });
+    }
+    const result = await this.ctx.model.Comment.create({
+      ...params,
+      uid: user.id,
+    });
+    return await this.ctx.model.Comment.findOne({
+      where: { id: result.id },
+      include: [
+        {
+          model: this.ctx.model.User,
+          as: 'user',
+          attributes: [
+            'id',
+            'username',
+            'email',
+            'nickname',
+            'total_view',
+            'total_like',
+            'total_comment',
+            'profession',
+            'avatar',
+          ],
+        },
+      ],
+    });
+  }
+
+  async createComment(params, uid) {
+    const result = await this.ctx.model.Comment.create({
+      ...params,
+      uid,
+    });
+
+    return await this.ctx.model.Comment.findOne({
+      where: { id: result.id },
+      include: [
+        {
+          model: this.ctx.model.User,
+          as: 'user',
+          attributes: [
+            'id',
+            'username',
+            'email',
+            'nickname',
+            'total_view',
+            'total_like',
+            'total_comment',
+            'profession',
+            'avatar',
+          ],
+        },
+      ],
+    });
   }
 
 }

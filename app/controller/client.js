@@ -102,6 +102,110 @@ class BlogController extends Controller {
     };
     ctx.body = resMsg;
   }
+
+  // [前台] 获取热门文章列表
+  async hot() {
+    const { ctx } = this;
+    const hot = await ctx.service.client.hots();
+    ctx.body = {
+      errcode: 0,
+      data: hot,
+      msg: 'success',
+    };
+  }
+
+  // [前台] 获取文章评论列表
+  async comments() {
+    const { ctx } = this;
+    const comments = await ctx.service.client.comments(ctx.query);
+    ctx.body = {
+      errcode: 0,
+      data: comments,
+      msg: 'success',
+    };
+  }
+
+  // [前台] 游客进行评论
+  async toursitComment() {
+    const { ctx } = this;
+
+    const { author, article_id } = ctx.request.body;
+    const [ comment ] = await Promise.all([
+      ctx.service.client.createToursitComment(ctx.request.body),
+      ctx.service.client.commentPlusOne(author),
+      ctx.service.login.commentPlusOne(article_id),
+    ]);
+    ctx.body = {
+      errcode: 0,
+      data: comment,
+      msg: 'success',
+    };
+  }
+
+  // [前台] 博主进行评论
+  async createComment() {
+    const { ctx } = this;
+    const { uid } = ctx.locals;
+    const { author, article_id } = ctx.request.body;
+    const [ comment ] = await Promise.all([
+      ctx.service.client.createComment(ctx.request.body, uid),
+      ctx.service.client.commentPlusOne(author),
+      ctx.service.login.commentPlusOne(article_id),
+    ]);
+    ctx.body = {
+      errcode: 0,
+      data: comment,
+      msg: 'success',
+    };
+  }
+
+  // [前台] 更新用户对文章的点赞状态
+  async updateFavorite() {
+    const { ctx } = this;
+    const { uid: favorite_id } = ctx.locals;
+    const { id: article_id, author } = ctx.request.body;
+    const favortie = await ctx.service.favortie.findOne(favorite_id, article_id);
+    if (!favortie) {
+      await Promise.all([
+        ctx.service.favortie.create({ favorite_id, article_id }),
+        ctx.service.client.favoritePlusOne(article_id),
+        ctx.service.login.favoritePlusOne(author),
+      ]);
+    } else {
+      if (favortie.status === 2) {
+        await Promise.all([
+          ctx.service.favortie.update(favortie.id, 1),
+          ctx.service.client.favoritePlusOne(article_id),
+          ctx.service.login.favoritePlusOne(author),
+        ]);
+      }
+      if (favortie.status === 1) {
+        await Promise.all([
+          ctx.service.favortie.update(favortie.id, 2),
+          ctx.service.client.favoriteReduceOne(article_id),
+          ctx.service.login.favoriteReduceOne(author),
+        ]);
+      }
+    }
+    ctx.body = {
+      errcode: 0,
+      data: {},
+      msg: 'success',
+    };
+  }
+
+  // [前台] 判断博主是否点赞文章
+  async isFavorite() {
+    const { ctx } = this;
+    const { uid: favorite_id } = ctx.locals;
+    const { id: article_id } = ctx.query;
+    const favorite = await ctx.service.favortie.findOne(favorite_id, article_id, 1);
+    ctx.body = {
+      errcode: 0,
+      data: favorite !== null,
+      msg: 'success',
+    };
+  }
 }
 
 module.exports = BlogController;

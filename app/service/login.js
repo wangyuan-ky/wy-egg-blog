@@ -6,6 +6,7 @@
 'use strict';
 
 const Service = require('egg').Service;
+const { literal } = require('sequelize');
 const jwt = require('jsonwebtoken');
 const svgCaptcha = require('svg-captcha');
 const { generatePassWord } = require('../extend/helper');
@@ -65,6 +66,96 @@ class LoginService extends Service {
       user: userData,
       token,
     };
+  }
+  async register(data) {
+    const { email, password } = data;
+    return this.ctx.model.User.create({
+      email,
+      password: generatePassWord(password),
+    });
+  }
+
+  // 根据邮箱查找 正常用户
+  async findUser(data) {
+    const { email } = data;
+    return this.ctx.model.User.findOne({
+      where: { email, status: 1 },
+    });
+  }
+
+  // 根据 ID 查找 正常用户
+  async queryUserById(id) {
+    return this.ctx.model.User.findOne({
+      where: { id, status: 1 },
+      attributes: [
+        'id',
+        'username',
+        'email',
+        'nickname',
+        'avatar',
+        'website',
+        'github',
+        'github',
+        'gitee',
+        'weibo',
+        'profession',
+        'summary',
+        'account_type',
+      ],
+    });
+  }
+
+  // 更新用户帐号信息
+  async updateAccount(params, id) {
+    return this.ctx.model.User.update(params, { where: { id } });
+  }
+
+  // 阅读量+1
+  async viewPlusOne(id) {
+    return this.ctx.model.User.update(
+      {
+        total_view: literal('total_view + 1'),
+      },
+      {
+        where: { id },
+      }
+    );
+  }
+
+  // 点赞量+1
+  async favoritePlusOne(id) {
+    return this.ctx.model.User.update(
+      {
+        total_like: literal('total_like + 1'),
+      },
+      {
+        where: { id },
+      }
+    );
+  }
+
+  // 点赞量-1
+  async favoriteReduceOne(id) {
+    return this.ctx.model.User.update(
+      {
+        total_like: literal('total_like - 1'),
+      },
+      {
+        where: { id },
+      }
+    );
+  }
+
+  // 评论量+1
+  async commentPlusOne(id) {
+    return this.ctx.model.User.update(
+      {
+        total_comment: literal('total_comment + 1'),
+      },
+      {
+        where: { id },
+      }
+    );
   }
 }
 
