@@ -94,10 +94,15 @@
       // logo区域
       .logo-group {
         transition: width .3s;
+        min-height: 60px;
         float: left;
         text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         img {
-          height: 60px;
+          width: 100%;
+          height: auto;
         }
       }
       // 折叠侧边栏切换按钮

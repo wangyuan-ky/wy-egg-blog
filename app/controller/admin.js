@@ -345,7 +345,7 @@ class BlogController extends Controller {
   // [后台] 获取文章评论列表
   async comments() {
     const { ctx } = this;
-    const comments = await ctx.service.client.comments();
+    const comments = await ctx.service.client.comments(ctx.query);
     ctx.body = {
       errcode: 0,
       data: comments,

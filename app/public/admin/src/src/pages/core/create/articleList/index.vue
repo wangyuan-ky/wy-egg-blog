@@ -10,52 +10,55 @@
       <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
     </div>
     <el-table
-    ref="multipleTable"
-    :data="articleList"
-    tooltip-effect="dark"
-    :default-sort = "{prop: 'date', created_at: 'descending'}"
-    @selection-change="handleSelectionChange"
-    style="width: 100%"
+      ref="multipleTable"
+      :data="articleList"
+      tooltip-effect="dark"
+      :default-sort = "{prop: 'date', created_at: 'descending'}"
+      @selection-change="handleSelectionChange"
+      style="width: 100%"
     >
-    <el-table-column
-      ref="test"
-      type="selection"
-      width="55">
-    </el-table-column>
-    <el-table-column
-      prop="createdAt"
-      sortable
-      label="日期"
-      :formatter="timeFormatter"
-      align="center"
-      width="220">
-    </el-table-column>
-    <el-table-column
-      prop="title"
-      align="center"
-      label="文章标题"
+      <el-table-column
+        ref="test"
+        type="selection"
+        width="55">
+      </el-table-column>
+      <el-table-column
+        prop="createdAt"
+        sortable
+        label="日期"
+        :formatter="timeFormatter"
+        align="center"
+        width="220">
+      </el-table-column>
+      <el-table-column
+        prop="title"
+        align="center"
+        label="文章标题"
       >
-    </el-table-column>
-    <el-table-column
-      align="center"
-      label="操作"
-      show-overflow-tooltip>
-      <template slot-scope="scope">
-        <el-button type="primary" icon="el-icon-edit" @click="toEdit(scope.row.id)">编辑</el-button>
-        <el-button type="danger" icon="el-icon-delete" @click="handleDel(scope.row.id)">删除</el-button>
-      </template>
-    </el-table-column>
-  </el-table>
-  <el-button class="del-batch" type="danger" icon="el-icon-delete" @click="delArticleBatch">批量删除</el-button>
-  <div class="pagination-wrapper">
-    <el-pagination
-      @current-change="handlePageChange"
-      background
-      :current-page="page"
-      layout="prev, pager, next, jumper"
-      :total="sumList">
-    </el-pagination>
-  </div>
+      </el-table-column>
+      <el-table-column
+        align="center"
+        label="操作">
+        <template slot-scope="scope">
+          <dialog-comments-manage :article-line="scope.row">
+            <el-button type="primary">评论管理</el-button>
+          </dialog-comments-manage>
+          <el-button type="primary" icon="el-icon-edit" @click="toEdit(scope.row.id)">编辑</el-button>
+          <el-button type="danger" icon="el-icon-delete" @click="handleDel(scope.row.id)">删除</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <el-button class="del-batch" type="danger" icon="el-icon-delete" @click="delArticleBatch">批量删除</el-button>
+    <div class="pagination-wrapper">
+      <el-pagination
+        @current-change="handlePageChange"
+        background
+        :current-page="page"
+        layout="prev, pager, next, jumper"
+        :total="sumList">
+      </el-pagination>
+    </div>
+
   </d2-container>
 </template>
 
