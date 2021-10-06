@@ -5,6 +5,14 @@ function getArticleDetail(options) {
   return axios.post(baseUrl + 'c/getArticleDetail', options)
 }
 
+function getArticleComments(options) {
+  return axios.get(baseUrl + 'c/comments', { params: options })
+}
+
+function createArticleComment(options) {
+  return axios.post(baseUrl + 'c/toursit/comment', options)
+}
+
 function getArticleList(options) {
   return axios.get(baseUrl + 'c/getArticleList', options)
 }
@@ -23,6 +31,8 @@ function getTagsAndCategories(options) {
 
 export {
   getArticleDetail,
+  getArticleComments,
+  createArticleComment,
   getArticleList,
   searchByCategory,
   searchByTag,

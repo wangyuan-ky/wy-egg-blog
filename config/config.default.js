@@ -53,6 +53,8 @@ module.exports = appInfo => {
       '/c/getTagsAndCategories', // 获取标签云（标签列表，分类列表）
       '/c/searchByCategory', // 根据 分类ID 获取文章列表
       '/c/searchByTag', // 根据 标签ID 获取文章列表
+      '/c/comments', // 根据 文章ID 获取文章评论列表
+      '/c/toursit/comment', // 游客评论
     ],
   };
 

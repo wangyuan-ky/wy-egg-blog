@@ -268,8 +268,6 @@ class BlogService extends Service {
     const tags = await ctx.model.Tag.findAll({
       where: { status: 1 },
     });
-    console.log('\n\n\n\ntags =');
-    console.log(JSON.stringify(tags));
     const res = [];
     for (let index = 0; index < tags.length; index++) {
       const item = tags[index];
@@ -344,6 +342,9 @@ class BlogService extends Service {
   }
 
   async commentPlusOne(id) {
+    if (!id) {
+      return;
+    }
     return this.ctx.model.Article.update(
       {
         comment: literal('comment + 1'),
@@ -401,7 +402,7 @@ class BlogService extends Service {
     }
     const result = await this.ctx.model.Comment.create({
       ...params,
-      uid: user.id,
+      user_id: user.id,
     });
     return await this.ctx.model.Comment.findOne({
       where: { id: result.id },
@@ -425,10 +426,10 @@ class BlogService extends Service {
     });
   }
 
-  async createComment(params, uid) {
+  async createComment(params, user_id) {
     const result = await this.ctx.model.Comment.create({
       ...params,
-      uid,
+      user_id,
     });
 
     return await this.ctx.model.Comment.findOne({

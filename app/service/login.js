@@ -148,6 +148,9 @@ class LoginService extends Service {
 
   // 评论量+1
   async commentPlusOne(id) {
+    if (!id) {
+      return;
+    }
     return this.ctx.model.User.update(
       {
         total_comment: literal('total_comment + 1'),

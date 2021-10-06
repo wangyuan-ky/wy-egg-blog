@@ -145,10 +145,10 @@ class BlogController extends Controller {
   // [前台] 博主进行评论
   async createComment() {
     const { ctx } = this;
-    const { uid } = ctx.locals;
+    const { user_id } = ctx.locals;
     const { author, article_id } = ctx.request.body;
     const [ comment ] = await Promise.all([
-      ctx.service.client.createComment(ctx.request.body, uid),
+      ctx.service.client.createComment(ctx.request.body, user_id),
       ctx.service.client.commentPlusOne(author),
       ctx.service.login.commentPlusOne(article_id),
     ]);
@@ -162,7 +162,7 @@ class BlogController extends Controller {
   // [前台] 更新用户对文章的点赞状态
   async updateFavorite() {
     const { ctx } = this;
-    const { uid: favorite_id } = ctx.locals;
+    const { user_id: favorite_id } = ctx.locals;
     const { id: article_id, author } = ctx.request.body;
     const favortie = await ctx.service.favortie.findOne(favorite_id, article_id);
     if (!favortie) {
@@ -197,7 +197,7 @@ class BlogController extends Controller {
   // [前台] 判断博主是否点赞文章
   async isFavorite() {
     const { ctx } = this;
-    const { uid: favorite_id } = ctx.locals;
+    const { user_id: favorite_id } = ctx.locals;
     const { id: article_id } = ctx.query;
     const favorite = await ctx.service.favortie.findOne(favorite_id, article_id, 1);
     ctx.body = {
