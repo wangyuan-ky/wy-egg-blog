@@ -1,8 +1,7 @@
 {
-  "name": "d2-admin-start-kit",
-  "version": "1.1.4",
-  "description": "A management system framework based on element",
-  "author": "李杨 <1711467488@qq.com>",
+  "name": "wy-blog-admin",
+  "version": "1.0.0",
+  "description": "wy-blog-admin",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",

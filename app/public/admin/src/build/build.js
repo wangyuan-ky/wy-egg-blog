@@ -7,16 +7,22 @@ process.env.NODE_ENV = 'production'
 
 // loading模块 https://www.npmjs.com/package/ora
 const ora = require('ora')
+
 // 删除模块 https://www.npmjs.com/package/rimraf
 const rm = require('rimraf')
+
 // path
 const path = require('path')
+
 // 输出彩色的文字 https://www.npmjs.com/package/chalk
 const chalk = require('chalk')
+
 // webpack
 const webpack = require('webpack')
+
 // 设置 这个文件里只用到了 config.build
 const config = require('../config')
+
 // webpack 生产环境的核心配置文件
 const webpackConfig = require('./webpack.prod.conf')
 

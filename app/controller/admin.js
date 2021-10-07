@@ -353,7 +353,7 @@ class BlogController extends Controller {
     };
   }
 
-  // [后台] 删除文章
+  // [后台] 删除文章评论
   async deleteComment() {
     const { ctx } = this;
     const { id } = ctx.request.body;
@@ -364,7 +364,6 @@ class BlogController extends Controller {
       msg: 'success',
     };
   }
-
 }
 
 module.exports = BlogController;

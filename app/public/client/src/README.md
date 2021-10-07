@@ -1,6 +1,6 @@
-# blog
+## wy-blog
 
-> blog
+> wy-blog
 
 ## Build Setup
 

@@ -218,7 +218,7 @@ class BlogService extends Service {
     );
   }
 
-  // 根据文章id恢复文章至垃圾箱文章
+  // 根据文章id恢复文章至草稿
   async recoveryArticleById(id) {
     const { ctx } = this;
     return await ctx.model.Article.update(
@@ -231,7 +231,7 @@ class BlogService extends Service {
     );
   }
 
-  // 根据文章id的数组批量恢复文章至垃圾箱文章
+  // 根据文章id的数组批量恢复文章至草稿
   async recoveryArticleBatch(list) {
     const { ctx } = this;
     return await ctx.model.Article.update(
@@ -289,12 +289,8 @@ class BlogService extends Service {
   async delCategory(id) {
     const { ctx } = this;
     return await ctx.model.Category.update(
-      {
-        status: 2, // 假删，状态由 1 变成 2
-      },
-      {
-        where: { id },
-      }
+      { status: 2 }, // 假删，状态由 1 变成 2
+      { where: { id } }
     );
   }
 
@@ -434,7 +430,7 @@ class BlogService extends Service {
     return uploadToken;
   }
 
-  // [后台] 删除文章
+  // [后台] 删除文章评论
   async deleteComment(id) {
     return this.ctx.model.Comment.update(
       {

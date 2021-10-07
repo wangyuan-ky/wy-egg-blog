@@ -9,8 +9,8 @@ const Controller = require('egg').Controller;
 class BlogController extends Controller {
   /**
    * 获取文章列表
-   * 如果没传keyword，返回所有文章
-   * 传入keywork返回根据keyword在标题和内容搜索的结果
+   * 如果没传 keyword，返回所有文章
+   * 传入 keyword 返回根据 keyword 在标题和内容搜索的结果
    */
   async getArticleList() {
     const { ctx } = this;

@@ -1,7 +1,7 @@
 {
-  "name": "blog",
+  "name": "wy-blog",
   "version": "1.0.0",
-  "description": "blog",
+  "description": "wy-blog",
   "author": "wangyuan-ky",
   "private": true,
   "scripts": {
