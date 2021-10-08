@@ -32,9 +32,10 @@ module.exports = appInfo => {
     password: 'admin',
   };
 
-  config.qiniu = { // 七牛的Access Key和Secret Key
-    ak: 'pZN1Fwwn7Qij9ICkZWdD7GAlzbr25hO6pNxUlsUg',
-    sk: '_ryoxhPTzEqvJSbL9o7DexlkkzLH0hwIis7FXg4i',
+  config.qiniu = {
+    ak: 'XDkolPPcrKwQSzp2h-R7E_fB5gwJ0ul7TPBMuUsg', // 七牛云的 Access Key
+    sk: '8dUZLaZHHV-tzJ6iKYH6s53CBUmpoBIHdss_eqHg', // 七牛云的 Secret Key
+    bucket: 'wy-blog-space', // 七牛云的 bucket
   };
 
   // add your middleware config here

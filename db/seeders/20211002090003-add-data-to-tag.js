@@ -9,19 +9,19 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('tags', [
       {
-        name: '古文',
+        name: '美文',
         en_name: '英文名，后期扩展',
         user_id: 1,
         category_id: 1,
       },
       {
-        name: '诗歌',
+        name: '风景',
         en_name: '英文名，后期扩展',
         user_id: 1,
         category_id: 1,
       },
       {
-        name: '插画',
+        name: '美图',
         en_name: '英文名，后期扩展',
         user_id: 1,
         category_id: 2,
@@ -45,13 +45,13 @@ module.exports = {
         category_id: 3,
       },
       {
-        name: 'Python',
+        name: 'Java',
         en_name: '英文名，后期扩展',
         user_id: 1,
         category_id: 3,
       },
       {
-        name: 'React',
+        name: 'Vue',
         en_name: '英文名，后期扩展',
         user_id: 1,
         category_id: 4,
