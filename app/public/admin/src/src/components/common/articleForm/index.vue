@@ -193,7 +193,7 @@ export default {
     },
     uploadComplete(res) {
       // 取得七牛返回的url
-      let url = 'http://r0e3p8ohy.hb-bkt.clouddn.com/' + res.key
+      let url = 'http://r0nyfn75a.hb-bkt.clouddn.com/' + res.key
       // 将url插入markdown
       this.$refs.md.$img2Url(this.pos, url)
     }

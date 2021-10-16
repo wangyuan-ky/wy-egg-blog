@@ -17,7 +17,7 @@
         <a href="https://www.zhihu.com/people/mu-xiao-yuan-88" target="_blank"><i class="iconfont">&#xe69a;</i></a>
       </Tooltip>
       <Tooltip content="QQ" placement="top">
-        <a href="tencent://message/?uin=342007229&Site=&Menu=yes"><i class="iconfont">&#xe657;</i></a>
+        <a href="tencent://message/?uin=951932321&Site=&Menu=yes"><i class="iconfont">&#xe657;</i></a>
       </Tooltip>
     </div>
     <footer>

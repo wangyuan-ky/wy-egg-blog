@@ -1,5 +1,9 @@
 ## wy-egg-blog
 
+### 报错
+解决：
+ 1. launchctl limit
+ 2. sudo launchctl limit maxfiles 524288 524288
 ### 目录结构
 
 ```
@@ -61,6 +65,14 @@
 
 ### 本地运行
 
+``` bash
+# 安装服务端依赖
+npm install
+
+# 运行服务
+npm run dev
+```
+
 #### 创建数据表
 该项目使用[Sequelize](https://sequelize.org/v5/)来操作数据库。使用`sequelize-cli`做数据库的迁移，非常方便，只需要我们提前定义好运行文件，需要的时候就可以直接操作并映射到数据库。如果你对`sequelize-cli`还不太了解可以参考官方文档[migrations](https://sequelize.org/v5/manual/migrations.html)。由于我提前把一些常用的命令写到了`package.json`文件中的`scripts`中,操作起来就更加方便了，只要执行
 
@@ -76,13 +88,7 @@ npm run migrate
 npm run seed
 ```
 
-``` bash
-# 安装服务端依赖
-npm install
-
-# 运行服务
-npm run dev
-
+```bash
 # 进入前台目录
 cd ./app/public/client/src
 
