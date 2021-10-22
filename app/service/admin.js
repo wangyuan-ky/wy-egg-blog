@@ -198,7 +198,6 @@ class BlogService extends Service {
   async delArticleBatch(list) {
     const { ctx } = this;
     if (ctx.request.body.truly) {
-      console.log('198 真删');
       // 如果truly为真，则真正删除该文章，否则改变文章的status，加入垃圾箱
       return await ctx.model.Article.destroy({
         where: {
@@ -207,7 +206,6 @@ class BlogService extends Service {
         force: true,
       });
     }
-    console.log('202 假删');
     return await ctx.model.Article.update(
       {
         status: 3, // 假删，状态由 1 变成 2

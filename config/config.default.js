@@ -28,8 +28,8 @@ module.exports = appInfo => {
   };
 
   config.user = { // 初始化管理员的账号
-    userName: 'admin',
-    password: 'admin',
+    userName: 'wangyuan',
+    password: 'wangyuan-ky',
   };
 
   config.qiniu = {

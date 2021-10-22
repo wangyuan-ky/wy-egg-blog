@@ -54,8 +54,8 @@ export default {
   data () {
     return {
       formLogin: {
-        username: 'admin',
-        password: 'admin',
+        username: 'wangyuan',
+        password: 'wangyuan-ky',
         code: 'adsd'
       },
       rules: {
